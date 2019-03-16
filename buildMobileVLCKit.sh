@@ -217,9 +217,9 @@ buildxcodeproj()
         fi
         if [ "$IOS" = "yes" ]; then
             if [ "$PLATFORM" = "iphonesimulator" ]; then
-                architectures="i386 x86_64"
+                architectures="x86_64"
             else
-                architectures="armv7 armv7s arm64"
+                architectures="armv7 arm64"
             fi
         fi
     else
@@ -228,7 +228,11 @@ buildxcodeproj()
 
     local bitcodeflag=""
     if [ "$BITCODE" = "yes" ]; then
+      if [ "$DEBUG" = "yes" ]; then
+        bitcodeflag="BITCODE_GENERATION_MODE=marker"
+      else
         bitcodeflag="BITCODE_GENERATION_MODE=bitcode"
+      fi
     fi
 
     local defs="$GCC_PREPROCESSOR_DEFINITIONS"
@@ -256,6 +260,13 @@ export CONFIGURE_FLAGS=
 export MODULES_BLACKLIST=
 export NOSCARY_MODULES_BLACKLIST=
 source $ROOT_DIR/config_flags.sh
+if [ "$DEBUG" = "yes" ]; then
+    OPTIM="-O0 -g -Og"
+    CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-optimizations" # compiler optimizations (default enabled)
+else
+    OPTIM="-O3 -g"
+    CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-optimizations" # compiler optimizations (default enabled)
+fi
 spopd
 
 # get python installation
@@ -334,12 +345,6 @@ buildLibVLC() {
     PLATFORM="$2"
     OSSTYLE=iPhone
 
-    if [ "$DEBUG" = "yes" ]; then
-        OPTIM="-O0 -g"
-    else
-        OPTIM="-O3 -g"
-    fi
-
     if [ "$TVOS" = "yes" ]; then
         OSSTYLE=AppleTV
     fi
@@ -389,7 +394,11 @@ buildLibVLC() {
     fi
 
     if [ "$BITCODE" = "yes" ]; then
-    CFLAGS+=" -fembed-bitcode"
+      if [ "$DEBUG" = "yes" ]; then
+        CFLAGS+=" -fembed-bitcode-marker"
+      else
+        CFLAGS+=" -fembed-bitcode"
+      fi
     fi
 
     export CFLAGS="${CFLAGS}"
@@ -449,13 +458,17 @@ buildLibVLC() {
         CUSTOMOSOPTIONS="--disable-fontconfig --disable-bghudappkit --disable-twolame --disable-microdns --disable-SDL --disable-SDL_image --disable-cddb --disable-bluray"
     fi
     if [ "$IOS" = "yes" ]; then
-        CUSTOMOSOPTIONS=""
+        CUSTOMOSOPTIONS="--disable-libarchive"
     fi
 
     if [ "${TARGET}" = "x86_64-apple-darwin14" ];then
         BUILD=""
     else
         BUILD="--build=x86_64-apple-darwin14"
+    fi
+
+    if [ ! "$DEBUG" = "yes" ]; then
+      CUSTOMOSOPTIONS="$CUSTOMOSOPTIONS --enable-small" # optimize libraries for size with slight speed decrease [DANGEROUS]"
     fi
 
     if [ "$MACOS" = "yes" ]; then
@@ -526,6 +539,7 @@ buildLibVLC() {
     if [ "$DEBUG" = "yes" ]; then
         DEBUGFLAG="--enable-debug"
     else
+        DEBUGFLAG="--enable-release"
         export CFLAGS="${CFLAGS} -DNDEBUG"
     fi
 
@@ -638,11 +652,11 @@ buildMobileKit() {
             fi
             if [ "$IOS" = "yes" ]; then
                 if [ "$PLATFORM" = "iphonesimulator" ]; then
-                    buildLibVLC "i386" "Simulator"
+                    # buildLibVLC "i386" "Simulator"
                     buildLibVLC "x86_64" "Simulator"
                 else
                     buildLibVLC "armv7" "OS"
-                    buildLibVLC "armv7s" "OS"
+                    # buildLibVLC "armv7s" "OS"
                     buildLibVLC "aarch64" "OS"
                 fi
             fi
@@ -879,7 +893,8 @@ build_universal_static_lib() {
         if [ "$OSSTYLE" != "AppleTV" ]; then
             # lipo the remaining NEON plugins
             DEVICEARCHS=""
-            for i in armv7 armv7s; do
+            # for i in armv7 armv7s; do
+            for i in armv7; do
                 local iarch="`get_arch $i`"
                 if [ "$FARCH" == "all" -o "$FARCH" = "$iarch" ];then
                     DEVICEARCHS="$DEVICEARCHS $iarch"

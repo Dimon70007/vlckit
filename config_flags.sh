@@ -10,18 +10,20 @@ export NOSCARY_MODULES_BLACKLIST=
 # "  --enable-FOO     configure to build package FOO"
 # "  --disable-disc   configure to not build optical discs packages"
 # "  --disable-net    configure to not build networking packages"
-# "  --disable-sout   configure to not build stream output packages"
+# "  --disable-sout   configure to not build stream output packages - aka BUILD_ENCODERS=false"
 # "  --enable-small   optimize libraries for size with slight speed decrease [DANGEROUS]"
 # "  --disable-gpl    configure to not build viral GPL code"
 # "  --disable-gnuv3  configure to not build version 3 (L)GPL code"
 # "  --enable-ad-clauses configure to build packages with advertising clauses"
 # "                   (USE AT YOUR OWN LEGAL RISKS)"
 # "  --disable-optim  disable optimization in libraries"
+# unrecognized option --with-minimal, --disable-dependency-tracking, --disable-docs, --disable-gpg-error
+
 
 BOOTSTRAP_FLAGS="
 --disable-gpl \
 --enable-ad-clauses \
---enable-small \
+--disable-sout \
 --disable-disc \
 --disable-sdl \
 --disable-SDL_image \
@@ -30,8 +32,6 @@ BOOTSTRAP_FLAGS="
 --disable-kate \
 --disable-caca \
 --disable-gettext \
---disable-protobuf \
---enable-mpcdec \
 --disable-upnp \
 --disable-gme \
 --disable-srt \
@@ -67,14 +67,37 @@ BOOTSTRAP_FLAGS="
 --disable-ncurses \
 --disable-asdcplib \
 --enable-soxr \
---disable-taglib"
+--disable-taglib \
+--disable-protobuf \
+--disable-aom \
+--disable-dav1d \
+--disable-opus \
+--disable-live555 \
+--disable-harfbuzz \
+--disable-matroska \
+--disable-mpcdec \
+--disable-projectM \
+--disable-flac \
+--disable-spatialaudio \
+--disable-theora \
+--disable-lame \
+--disable-twolame \
+--disable-ogg \
+--disable-speex \
+--disable-speexdsp \
+--disable-mpg123 \
+--disable-shout \
+--disable-modplug \
+--disable-jack \
+--disable-mfx \
+--disable-openjpeg"
 
 CONFIGURE_FLAGS="
---enable-static \
+--enable-static=yes \
+--enable-shared=no \
 --disable-macosx \
 --disable-macosx-qtkit \
 --disable-macosx-avfoundation \
---disable-shared \
 --disable-chromaprint \
 --disable-opus \
 --disable-faad \
@@ -89,8 +112,6 @@ CONFIGURE_FLAGS="
 --disable-nls \
 --disable-sse \
 --disable-notify \
---enable-libdsm \
---disable-swscale \
 --disable-live555 \
 --disable-realrtsp \
 --disable-projectm \
@@ -230,8 +251,8 @@ mpegaudio"
 #   # --enable-winstore-app   Build targetted for Windows Store apps (default disabled)
 #   # --with-contrib=DIR      search for 3rd party libraries in DIR/include and DIR/lib
 #
-# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-shared" #[=PKGS] build shared libraries [default=yes]
-# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-static"  # --enable-static #[=PKGS]  build static libraries [default=no]
+# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-shared=no" #[=PKGS] build shared libraries [default=yes]
+# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-static=yes"  # --enable-static #[=PKGS]  build static libraries [default=no]
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --without-pic" # [=PKGS] try to use only PIC/non-PIC objects [default=use both]
 #
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-fast-install" # [=PKGS] optimize for fast installation [default=yes]
@@ -255,8 +276,8 @@ CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-fast-install" # [=PKGS] optimize fo
 #   # --enable-gprof          profile with gprof (default disabled)
 #   # --enable-cprof          profile with cprof (default disabled)
 #   # --enable-coverage       build for test coverage (default disabled)
-#   # --with-sanitizer=(address/memory/undefined/thread)
-#   #                         build with sanitizer flags (default disabled)
+#   # --with-sanitizer=(address/memory/undefined/thread)  build with sanitizer flags (default disabled)
+
 # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-optimizations" # compiler optimizations (default enabled)
 # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-mmx" # disable MMX optimizations (default auto)
 # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-sse" # disable SSE (1-4) optimizations (default auto)
@@ -283,86 +304,86 @@ CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-fast-install" # [=PKGS] optimize fo
 #   # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-dsm" # libdsm SMB/CIFS access/sd module [default=auto]
 #   CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-dsm" # libdsm SMB/CIFS access/sd module [default=auto]
 #   # --enable-sftp           (support SFTP file transfer via libssh2)                          [default=auto]
-#   # --enable-nfs            (support nfs protocol via libnfs) [default=auto]
-#   # --disable-v4l2          disable Video4Linux version 2 (default auto)
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS}  --disable-nfs" # (support nfs protocol via libnfs) [default=auto]
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS}  --disable-v4l2" #  disable Video4Linux version 2 (default auto)
 #   # --disable-decklink      disable Blackmagic DeckLink SDI input (default auto)
 #   # --with-decklink-sdk=DIR   location of Blackmagic DeckLink SDI SDK)
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-vcd" #disable built-in VCD and CD-DA support (default enabled)
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-libcddb" #disable CDDB for Audio CD (default enabled)
 # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-screen" # disable screen capture (default enabled)
 # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-vnc" # (VNC/rfb client support) [default=auto]
-# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-freerdp" #(RDP/Remote Desktop client support) [default=auto]
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-freerdp" #(RDP/Remote Desktop client support) [default=auto]
 # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-realrtsp" # Real RTSP module (default disabled)
 # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-macosx-qtkit" # Mac OS X qtsound (audio) module (default enabled on Mac OS X <= v10.11)
 # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-macosx-avfoundation" # Mac OS X avcapture (video) module (default enabled on Mac OS X)
 # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-asdcp" # build with asdcp support enabled [default=auto]
 # # Mux/Demux plugins:
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-dvbpsi" # build with dvbpsi support enabled [default=auto] MPEG-TS support
-# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-gme" #use Game Music Emu (default auto)
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-gme" #use Game Music Emu (default auto)
 # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-sid" # C64 sid demux support (default auto)
-# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-ogg" # Ogg demux support [default=auto]
-# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-shout" # libshout output plugin [default=auto]
-# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-matroska" # MKV format support [default=auto]
-# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-mod" # do not use libmodplug (default auto)
-CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-mpc" #  do not use libmpcdec (default auto)
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-ogg" # Ogg demux support [default=auto]
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-shout" # libshout output plugin [default=auto]
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-matroska" # MKV format support [default=auto]
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-mod" # do not use libmodplug (default auto)
+# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-mpc" #  do not use libmpcdec (default auto)
 #
 # # Codec plugins:
 #   # --enable-wma-fixed      libwma-fixed module (default disabled)
-#   # --enable-shine          MPEG Audio Layer 3 encoder [default=auto]
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-shine" #  MPEG Audio Layer 3 encoder [default=auto]
 #   # --enable-omxil          openmax il codec module (default disabled)
 #   # --enable-omxil-vout     openmax il video output module (default disabled)
 #   # --enable-rpi-omxil     openmax il configured for raspberry pi (default disabled)
-#   # --enable-crystalhd      crystalhd codec plugin (default auto)
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-crystalhd" # crystalhd codec plugin (default auto)
 #   # --with-mad=PATH         path to libmad
 # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-mad" # libmad module (default enabled)
-#   # --enable-mpg123         libmpg123 decoder support [default=auto]
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-mpg123" #  libmpg123 decoder support [default=auto]
 #   # --enable-gst-decode     GStreamer based decoding support (currently supports only video decoding) (default auto)
 #
-#   # --enable-merge-ffmpeg   merge FFmpeg-based plugins (default disabled)
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-merge-ffmpeg" # merge FFmpeg-based plugins (default disabled)
 # # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-avcodec" # libavcodec codec (default enabled)
 # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-libva" # VAAPI GPU decoding support (libVA) (default auto)
 #   # --enable-dxva2          DxVA2 GPU decoding support (default auto)
 #   # --enable-d3d11va          D3D11 GPU decoding support (default auto)
 # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-avformat" # libavformat containers (default enabled)
-# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-swscale" # libswscale image scaling and conversion (default enabled)
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-swscale" # libswscale image scaling and conversion (default enabled) need for screenshot on ios
 #   # --enable-postproc       libpostproc image post-processing (default auto)
 # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-faad" # faad codec (default auto)
-#   # --enable-aom            experimental AV1 codec (default auto) [default=auto]
-#   # --enable-dav1d          AV1 decoder (default auto) [default=auto]
-# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-vpx" # libvpx VP8/VP9 encoder and decoder (default auto)
-#   # --enable-twolame        MPEG Audio Layer 2 encoder [default=auto]
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-aom" # experimental AV1 codec (default auto) [default=auto] It can have 20% higher data compression than VP9 or HEVC/H.265 from the Moving Picture Experts Group and about 50% higher than the widely used AVC
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-dav1d" # AV1 decoder (default auto) [default=auto] AV1 is intended for use in HTML5 web video and WebRTC together with the Opus audio format. more info - https://en.wikipedia.org/wiki/AV1
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-vpx" # libvpx VP8/VP9 encoder and decoder (default auto)
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-twolame" # MPEG Audio Layer 2 encoder [default=auto]
 #   # --enable-fdkaac         FDK-AAC encoder [default=disabled]
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-a52" # A/52 support with liba52 (default enabled)
 #   # --with-a52=PATH         a52 headers and libraries
 #   # --enable-dca            DTS Coherent Acoustics support with libdca [default=auto]
 # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-flac" # libflac decoder/encoder support [default=auto]
-# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-libmpeg2" #libmpeg2 decoder support [default=auto]
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-libmpeg2" #libmpeg2 decoder support [default=auto]
 # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-vorbis" # Vorbis decoder and encoder [default=auto]
 # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-tremor" # Tremor decoder support (default disabled)
 # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-speex" # Speex support [default=auto]
 # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-opus" # Opus support [default=auto]
-# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-spatialaudio" #Ambisonic channel mixer and binauralizer [default=auto]
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-spatialaudio" #Ambisonic channel mixer and binauralizer [default=auto]
 # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-theora" # experimental theora codec [default=auto]
-#   # --enable-oggspots       experimental OggSpots codec [default=auto]
-#   # --enable-daala          experimental daala codec [default=disabled]
-# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-schroedinger" # dirac decoder and encoder using schroedinger [default=auto]
-# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-png" #PNG support (default enabled)
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-oggspots" #  experimental OggSpots codec [default=auto]
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-daala" # experimental daala codec [default=disabled]
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-schroedinger" # dirac decoder and encoder using schroedinger [default=auto]
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-png" #PNG support (default enabled)
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-jpeg" # JPEG support (default enabled)
 #   # --enable-bpg           BPG support (default disabled)
 #   # --enable-x262           H262 encoding support with static libx262 (default disabled)
-#   # --enable-x265           HEVC/H.265 encoder [default=auto]
-# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-x264" #H264 encoding support with libx264 (default enabled)
-# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-x26410b" #  H264 10-bit encoding support with libx264 (default enabled)
-#   # --enable-mfx            Intel QuickSync MPEG4-Part10/MPEG2 (aka H.264/H.262)  encoder [default=auto]
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-x265" # HEVC/H.265 encoder [default=auto]
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-x264" #H264 encoding support with libx264 (default enabled)
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-x26410b" #  H264 10-bit encoding support with libx264 (default enabled)
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-mfx" # Intel QuickSync MPEG4-Part10/MPEG2 (aka H.264/H.262)  encoder [default=auto]
 # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-fluidsynth" # MIDI synthetiser with libfluidsynth [default=auto]
-# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-fluidlite" # MIDI synthetiser with libfluidsynth [default=auto]
-# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-zvbi" # VBI (inc. Teletext) decoding support with libzvbi (default enabled)
-# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-telx" # Teletext decoding module (conflicting with zvbi) (default enabled if zvbi is absent)
-# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-libass" # Subtitle support using libass (default enabled)
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-fluidlite" # MIDI synthetiser with libfluidsynth [default=auto]
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-zvbi" # VBI (inc. Teletext) decoding support with libzvbi (default enabled)
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-telx" # Teletext decoding module (conflicting with zvbi) (default enabled if zvbi is absent)
+# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-libass" # Subtitle support using libass (default enabled)
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-aribsub" #ARIB Subtitles support (default enabled)
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-aribb25" #ARIB STD-B25 [default=auto]
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-kate" # kate codec [default=auto]
-#   # --enable-tiger          Tiger rendering library for Kate streams (default auto)
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-tiger" # Tiger rendering library for Kate streams (default auto)
 #   # --enable-css            CSS selector engine (default auto)
 #
 # # Video plugins:
@@ -375,32 +396,32 @@ CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-kate" # kate codec [default=auto]
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-sdl-image" #SDL image support (default enabled)
 # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-freetype" # freetype support   (default auto)
 # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-fribidi" # fribidi support    (default auto)
-#   # --enable-harfbuzz       harfbuzz support   (default auto)
-# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-fontconfig" # fontconfig support (default auto)
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-harfbuzz" # harfbuzz support   (default auto)
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-fontconfig" # fontconfig support (default auto)
 #   # --with-default-font=PATH  Path to the default font
 #   # --with-default-monospace-font=PATH Path to the default font
 #   # --with-default-font-family=NAME Path to the default font family
 #   # --with-default-monospace-font-family=NAME  Path to the default font family
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-svg" # SVG rendering library [default=auto]
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-svgdec" # SVG image decoder library [default=auto]
-# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-directx" # Microsoft DirectX support (default enabled on Windows)
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-directx" # Microsoft DirectX support (default enabled on Windows)
 #   # --enable-aa             aalib output (default disabled)
-# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-caca" # libcaca output [default=auto]
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-caca" # libcaca output [default=auto]
 #   # --enable-kva            support the K Video Accelerator KVA (default enabled on OS/2)
 #   # --enable-mmal           Multi-Media Abstraction Layer (MMAL) hardware plugin  (default enabled)
 #   # --enable-evas           use evas output module (default disabled)
 #
 # # Audio plugins:
 # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-pulse" # use the PulseAudio client library (default auto)
-#   # --enable-alsa           support the Advanced Linux Sound Architecture (default auto)
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-alsa" # support the Advanced Linux Sound Architecture (default auto)
 #   # --enable-oss            support the Open Sound System OSS (default enabled on FreeBSD/NetBSD/DragonFlyBSD)
-#   # --disable-sndio         support the OpenBSD sndio (default auto)
-#   # --enable-wasapi         use the Windows Audio Session API (default auto)
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-sndio" # support the OpenBSD sndio (default auto)
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-wasapi" # use the Windows Audio Session API (default auto)
 #
 # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-jack" # do not use jack (default auto)
 #   # --enable-opensles       Android OpenSL ES audio module (default disabled)
 #   # --enable-tizen-audio    Tizen audio module (default enabled on Tizen)
-# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-samplerate" # Resampler with libsamplerate [default=auto]
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-samplerate" # Resampler with libsamplerate [default=auto]  is a library for performing sample rate conversion of audio data.
 # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-soxr" # SoX Resampler library [default=auto]
 #   # --enable-kai            support the K Audio Interface KAI (default enabled on OS/2)
 # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-chromaprint" # (Chromaprint based audio fingerprinter) [default=auto]
@@ -414,9 +435,9 @@ CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-chromecast" # (Chromecast streamin
 # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-sparkle" # Sparkle update support for OS X (default enabled on Mac OS X)
 #   # --with-breakpad=URL     Enable Breakpad reporter using given URL
 # # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-minimal-macosx" #Minimal Mac OS X support (default disabled)
-# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-ncurses" # ncurses text-based interface (default auto)
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-ncurses" # ncurses text-based interface (default auto)
 #   # --enable-lirc           lirc support (default disabled)
-# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-srt" # SRT input/output plugin [default=auto]
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-srt" # SRT input/output plugin [default=auto]
 #
 # # Visualisations and Video filter plugins:
 # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-goom" # goom visualization plugin [default=auto]
@@ -432,7 +453,7 @@ CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-chromecast" # (Chromecast streamin
 #
 # # Misc options:
 # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-libxml2" #libxml2 support [default=auto]
-# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-libgcrypt" #gcrypt support (default enabled)
+# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-libgcrypt" #gcrypt support (default enabled) may be candidate for disabling
 # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-gnutls" #GNU TLS TLS/SSL support (default enabled)
 # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-taglib" #do not use TagLib (default enabled)
 #   # --enable-secret         use libsecret for keystore [default=auto]
