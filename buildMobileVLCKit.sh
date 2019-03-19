@@ -24,8 +24,8 @@ OSVERSIONMINCFLAG=miphoneos
 OSVERSIONMINLDFLAG=ios
 ROOT_DIR=empty
 FARCH="all"
-
-TESTEDHASH="9f7eea43b8" # libvlc hash that this version of VLCKit is build on
+# b8c57759a4137819a291635e7ed4ff5fee8b3657 - comit hash of my local changes
+TESTEDHASH="b8c57759a4" #"9f7eea43b8" # libvlc hash that this version of VLCKit is build on
 
 if [ -z "$MAKE_JOBS" ]; then
     CORE_COUNT=`sysctl -n machdep.cpu.core_count`
@@ -292,7 +292,8 @@ if [ "$NONETWORK" != "yes" ]; then
       if [ -d $vlc_copy ]; then
         cp -r $vlc_copy vlc
       else
-        git clone https://git.videolan.org/git/vlc/vlc-3.0.git vlc && cp -r vlc $vlc_copy
+        # git clone https://git.videolan.org/git/vlc/vlc-3.0.git vlc && cp -r vlc $vlc_copy
+        git clone https://github.com/Dimon70007/vlc.git vlc && cp -r vlc $vlc_copy
       fi
         info "Applying patches to vlc.git"
         cd vlc
@@ -335,7 +336,7 @@ if [ "$SKIPLIBVLCCOMPILATION" != "yes" ]; then
     extras_copy=${ROOT_DIR}/../vlc_copy/extras
     old_tools=${extras_copy}/old_tools
     if [ ! -d $old_tools ]; then # tools have not been copyed yet
-      cp -r $extras_copy/tools $old_tools && cp -r $tools_dir $extras_copy/tools
+      cp -r $extras_copy/tools $old_tools && cp -r $tools_dir $extras_copy
     fi
     spopd #libvlc/vlc/extras/tools
 fi
@@ -546,7 +547,7 @@ buildLibVLC() {
     if [ "$SCARY" = "yes" ]; then
         SCARYFLAG="--enable-dvbpsi --enable-avcodec"
     else
-        SCARYFLAG="--disable-dca --disable-avcodec --disable-avformat --disable-zvbi" #--enable-vpx"
+        SCARYFLAG="--disable-dca --disable-avcodec --disable-avformat --disable-zvbi --enable-vpx"
     fi
 
     if [ "$TVOS" != "yes" -a \( "$ARCH" = "armv7" -o "$ARCH" = "armv7s" \) ];then
@@ -562,9 +563,9 @@ buildLibVLC() {
     if [ "${VLCROOT}/configure" -nt config.log -o \
          "${THIS_SCRIPT_PATH}" -nt config.log ]; then
          info "Configuring vlc"
-        confgr_flgs="--prefix="${PREFIX}" \
-                --host="${TARGET}" \
-                --with-contrib="${VLCROOT}/contrib/${OSSTYLE}-${TARGET}-${ARCH}" \
+        confgr_flgs="--prefix=${PREFIX} \
+                --host=${TARGET} \
+                --with-contrib=${VLCROOT}/contrib/${OSSTYLE}-${TARGET}-${ARCH} \
                 ${DEBUGFLAG} \
                 ${CONFIGURE_FLAGS} \
                 ${SCARYFLAG}"
