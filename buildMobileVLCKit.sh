@@ -207,6 +207,7 @@ buildxcodeproj()
     info "Building $1 ($target, ${CONFIGURATION}, $PLATFORM)"
 
     local architectures=""
+    local bitcodeflag=""
     if [ "$FARCH" = "all" ];then
         if [ "$TVOS" = "yes" ]; then
             if [ "$PLATFORM" = "appletvsimulator" ]; then
@@ -226,9 +227,8 @@ buildxcodeproj()
         architectures=`get_actual_arch $FARCH`
     fi
 
-    local bitcodeflag=""
-    if [ "$BITCODE" = "yes" ]; then
-      if [ "$DEBUG" = "yes" ]; then
+    if [ "$BITCODE" = "yes" -a \( "$PLATFORM" = "iphoneos" -o "$PLATFORM" = "appletvos" \) ]; then
+      if [ "$CONFIGURATION" = "Debug" ]; then
         bitcodeflag="BITCODE_GENERATION_MODE=marker"
       else
         bitcodeflag="BITCODE_GENERATION_MODE=bitcode"
@@ -385,21 +385,20 @@ buildLibVLC() {
     OBJCFLAGS="${OPTIM}"
 
     if [ "$PLATFORM" = "OS" ]; then
-    if [ "$ARCH" != "aarch64" ]; then
-    CFLAGS+=" -mcpu=cortex-a8 -${OSVERSIONMINCFLAG}-version-min=${SDK_MIN}"
-    else
-    CFLAGS+=" -${OSVERSIONMINCFLAG}-version-min=${SDK_MIN}"
-    fi
-    else
-    CFLAGS+=" -${OSVERSIONMINCFLAG}-version-min=${SDK_MIN}"
-    fi
-
-    if [ "$BITCODE" = "yes" ]; then
-      if [ "$DEBUG" = "yes" ]; then
-        CFLAGS+=" -fembed-bitcode-marker"
+      if [ "$ARCH" != "aarch64" ]; then
+        CFLAGS+=" -mcpu=cortex-a8 -${OSVERSIONMINCFLAG}-version-min=${SDK_MIN}"
       else
-        CFLAGS+=" -fembed-bitcode"
+        CFLAGS+=" -${OSVERSIONMINCFLAG}-version-min=${SDK_MIN}"
       fi
+      if [ "$BITCODE" = "yes" ]; then
+        if [ "$CONFIGURATION" = "Debug" ]; then
+          CFLAGS+=" -fembed-bitcode-marker"
+        else
+          CFLAGS+=" -fembed-bitcode"
+        fi
+      fi
+    else
+      CFLAGS+=" -${OSVERSIONMINCFLAG}-version-min=${SDK_MIN}"
     fi
 
     export CFLAGS="${CFLAGS}"
