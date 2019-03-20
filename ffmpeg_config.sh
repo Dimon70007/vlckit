@@ -14,36 +14,23 @@ export COMMON_FF_CFG_FLAGS=
 #   --enable-small           optimize for size instead of speed
 #   --disable-runtime-cpudetect disable detecting CPU capabilities at runtime (smaller binary)
 #   --enable-gray            enable full grayscale support (slower color)
-#   --disable-swscale-alpha  disable alpha channel support in swscale
+COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-swscale-alpha" #  disable alpha channel support in swscale
 #   --disable-all            disable building components, libraries and programs
 #   --disable-autodetect     disable automatically detected external libraries [no]
-# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-runtime-cpudetect"
-# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-gray"
-COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-swscale-alpha"
 
 # Program options:
-#   --disable-programs       do not build command line programs
-#   --disable-ffmpeg         disable ffmpeg build
-#   --disable-ffplay         disable ffplay build
-#   --disable-ffprobe        disable ffprobe build
-#   --disable-ffserver       disable ffserver build
-COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-programs"
-COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-ffmpeg"
-COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-ffplay"
-COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-ffprobe"
-COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-ffserver"
+COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-programs" # do not build command line programs
+COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-ffmpeg" # disable ffmpeg build
+COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-ffplay" # disable ffplay build
+COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-ffprobe" # disable ffprobe build
+COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-ffserver" # disable ffserver build
 
 # Documentation options:
-#   --disable-doc            do not build documentation
-#   --disable-htmlpages      do not build HTML documentation pages
-#   --disable-manpages       do not build man documentation pages
-#   --disable-podpages       do not build POD documentation pages
-#   --disable-txtpages       do not build text documentation pages
-COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-doc"
-COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-htmlpages"
-COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-manpages"
-COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-podpages"
-COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-txtpages"
+COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-doc" # do not build documentation
+COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-htmlpages" # do not build HTML documentation pages
+COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-manpages" # do not build man documentation pages
+COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-podpages" # do not build POD documentation pages
+COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-txtpages" # do not build text documentation pages
 
 # Component options:
 #   --disable-avdevice       disable libavdevice build
@@ -90,31 +77,29 @@ COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-postproc"
 # COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-fft"
 
 # hardware acceleration features:
-# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-amf" # disable AMF video encoding code [autodetect]
-#   --disable-audiotoolbox   disable Apple AudioToolbox code [autodetect]
-# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-cuda" # disable dynamically linked Nvidia CUDA code [autodetect]
-#   --enable-cuda-sdk        enable CUDA features that require the CUDA SDK [no]
-#   --disable-cuvid          disable Nvidia CUVID support [autodetect]
-#   --disable-d3d11va        disable Microsoft Direct3D 11 video acceleration code [autodetect]
-#   --disable-dxva2          disable Microsoft DirectX 9 video acceleration code [autodetect]
-#   --enable-libdrm          enable DRM code (Linux) [no]
-#   --enable-libmfx          enable Intel MediaSDK (AKA Quick Sync Video) code via libmfx [no]
-#   --enable-libnpp          enable Nvidia Performance Primitives-based code [no]
-#   --enable-mmal            enable Broadcom Multi-Media Abstraction Layer (Raspberry Pi) via MMAL [no]
-#   --disable-nvdec          disable Nvidia video decoding acceleration (via hwaccel) [autodetect]
-#   --disable-nvenc          disable Nvidia video encoding code [autodetect]
-#   --enable-omx             enable OpenMAX IL code [no]
-#   --enable-omx-rpi         enable OpenMAX IL code for Raspberry Pi [no]
-#   --enable-rkmpp           enable Rockchip Media Process Platform code [no]
-#   --disable-v4l2-m2m       disable V4L2 mem2mem code [autodetect]
-#   --disable-vaapi          disable Video Acceleration API (mainly Unix/Intel) code [autodetect]
-#   --disable-vdpau          disable Nvidia Video Decode and Presentation API for Unix code [autodetect]
-#   --disable-videotoolbox   disable VideoToolbox code [autodetect]
-
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-dxva2"
 # COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-vaapi"
-# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-vda"
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-vdpau"
+# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-amf" # disable AMF video encoding code [autodetect]
+# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-cuda" # disable dynamically linked Nvidia CUDA code [autodetect]
+#   # --enable-cuda-sdk        enable CUDA features that require the CUDA SDK [no]
+# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS  --disable-d3d11va" # disable Microsoft Direct3D 11 video acceleration code [autodetect]
+# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS  --disable-dxva2"   # disable Microsoft DirectX 9 video acceleration code [autodetect]
+#   # --enable-libdrm          enable DRM code (Linux) [no]
+#   # --enable-libmfx          enable Intel MediaSDK (AKA Quick Sync Video) code via libmfx [no]
+#   # --enable-libnpp          enable Nvidia Performance Primitives-based code [no]
+#   # --enable-mmal            enable Broadcom Multi-Media Abstraction Layer (Raspberry Pi) via MMAL [no]
+# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS  --disable-cuvid"   # disable Nvidia CUVID support [autodetect]
+# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS  --disable-nvdec"   # disable Nvidia video decoding acceleration (via hwaccel) [autodetect]
+# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS  --disable-nvenc"   # disable Nvidia video encoding code [autodetect]
+#   # --enable-omx             enable OpenMAX IL code [no]
+#   # --enable-omx-rpi         enable OpenMAX IL code for Raspberry Pi [no]
+#   # --enable-rkmpp           enable Rockchip Media Process Platform code [no]
+#   # --disable-v4l2-m2m       disable V4L2 mem2mem code [autodetect]
+# # COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS  --disable-vaapi"   # disable Video Acceleration API (mainly Unix/Intel) code [autodetect]
+# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS  --disable-vdpau"   # disable Nvidia Video Decode and Presentation API for Unix code [autodetect]
+  # --disable-audiotoolbox   disable Apple AudioToolbox code [autodetect]
+  # --disable-videotoolbox   disable VideoToolbox code [autodetect]
 
 # Individual component options:
 #   --disable-everything     disable all components listed below
@@ -157,44 +142,44 @@ COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-encoders"
 # ./configure --list-decoders
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-decoders"
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-decoder=ac3" # need for aac parser
-# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-decoder=flac"
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-decoder=aac"
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-decoder=aac_latm"
-COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-decoder=h263"
-COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-decoder=h263i"
-COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-decoder=h263p"
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-decoder=h264"
-COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-decoder=mp3*"
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-decoder=hevc"
+COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-decoder=mp3" # crashes without mp3 decoder
+# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-decoder=h263"
+# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-decoder=h263i"
+# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-decoder=h263p"
+# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-decoder=flac"
 
 # ./configure --list-muxers
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-muxers"
 
 # ./configure --list-demuxers
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-demuxers"
-# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-demuxer=flac"
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-demuxer=ac3"
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-demuxer=aac"
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-demuxer=concat"
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-demuxer=data"
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-demuxer=hls"
-COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-demuxer=mp3"
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-demuxer=mpegps"
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-demuxer=mpegts"
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-demuxer=mpegtsraw"
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-demuxer=mpegvideo"
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-demuxer=hevc"
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-demuxer=dash"
+COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-demuxer=mp3"
+# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-demuxer=flac"
 
 # ./configure --list-parsers
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-parsers"
-# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-parser=flac"
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-parser=ac3"
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-parser=aac"
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-parser=aac_latm"
-COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-parser=h263"
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-parser=h264"
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-parser=hevc"
+# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-parser=flac"
+# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-parser=h263"
 
 # ./configure --list-bsf
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-bsfs"
@@ -241,14 +226,12 @@ export COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-iconv"
 #   --enable-avisynth        enable reading of AviSynth script files [no]
 #   --disable-bzlib          disable bzlib [autodetect]
 #   --disable-coreimage      disable Apple CoreImage framework [autodetect]
-#   --enable-chromaprint     enable audio fingerprinting with chromaprint [no]
+# export COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-chromaprint" #  enable audio fingerprinting with chromaprint [no]
 #   --enable-frei0r          enable frei0r video filtering [no]
-#   --enable-gcrypt          enable gcrypt, needed for rtmp(t)e support
+# --disable-gcrypt" # enable gcrypt, needed for rtmp(t)e support
 #                            if openssl, librtmp or gmp is not used [no]
-#   --enable-gmp             enable gmp, needed for rtmp(t)e support
-#                            if openssl or librtmp is not used [no]
-#   --enable-gnutls          enable gnutls, needed for https support
-#                            if openssl is not used [no]
+# export COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-gmp" # enable gmp, needed for rtmp(t)e support if openssl or librtmp is not used [no]
+#   --enable-gnutls          enable gnutls, needed for https support if openssl is not used [no]
 #   --disable-iconv          disable iconv [autodetect]
 #   --enable-jni             enable JNI support [no]
 #   --enable-ladspa          enable LADSPA audio filtering [no]
@@ -325,116 +308,10 @@ export COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-iconv"
 #   --enable-openal          enable OpenAL 1.1 capture support [no]
 #   --enable-opencl          enable OpenCL processing [no]
 #   --enable-opengl          enable OpenGL rendering [no]
-#   --enable-openssl         enable openssl, needed for https support
-#                            if gnutls is not used [no]
+#   --enable-openssl         enable openssl, needed for https support if gnutls is not used [no]
 #   --disable-sndio          disable sndio support [autodetect]
-#   --disable-schannel       disable SChannel SSP, needed for TLS support on
-#                            Windows if openssl and gnutls are not used [autodetect]
+#   --disable-schannel       disable SChannel SSP, needed for TLS support on Windows if openssl and gnutls are not used [autodetect]
 #   --disable-sdl2           disable sdl2 [autodetect]
-#   --disable-securetransport disable Secure Transport, needed for TLS support
-#                            on OSX if openssl and gnutls are not used [autodetect]
+#   --disable-securetransport disable Secure Transport, needed for TLS support on OSX if openssl and gnutls are not used [autodetect]
 #   --disable-xlib           disable xlib [autodetect]
 #   --disable-zlib           disable zlib [autodetect]
-#
-
-#
-# Toolchain options:
-#   --arch=ARCH              select architecture [$arch]
-#   --cpu=CPU                select the minimum required CPU (affects
-#                            instruction selection, may crash on older CPUs)
-#   --cross-prefix=PREFIX    use PREFIX for compilation tools [$cross_prefix]
-#   --progs-suffix=SUFFIX    program name suffix []
-#   --enable-cross-compile   assume a cross-compiler is used
-#   --sysroot=PATH           root of cross-build tree
-#   --sysinclude=PATH        location of cross-build system headers
-#   --target-os=OS           compiler targets OS [$target_os]
-#   --target-exec=CMD        command to run executables on target
-#   --target-path=DIR        path to view of build directory on target
-#   --target-samples=DIR     path to samples directory on target
-#   --tempprefix=PATH        force fixed dir/prefix instead of mktemp for checks
-#   --toolchain=NAME         set tool defaults according to NAME
-#   --nm=NM                  use nm tool NM [$nm_default]
-#   --ar=AR                  use archive tool AR [$ar_default]
-#   --as=AS                  use assembler AS [$as_default]
-#   --ln_s=LN_S              use symbolic link tool LN_S [$ln_s_default]
-#   --strip=STRIP            use strip tool STRIP [$strip_default]
-#   --windres=WINDRES        use windows resource compiler WINDRES [$windres_default]
-#   --x86asmexe=EXE          use nasm-compatible assembler EXE [$x86asmexe_default]
-#   --cc=CC                  use C compiler CC [$cc_default]
-#   --cxx=CXX                use C compiler CXX [$cxx_default]
-#   --objcc=OCC              use ObjC compiler OCC [$cc_default]
-#   --dep-cc=DEPCC           use dependency generator DEPCC [$cc_default]
-#   --nvcc=NVCC              use Nvidia CUDA compiler NVCC [$nvcc_default]
-#   --ld=LD                  use linker LD [$ld_default]
-#   --pkg-config=PKGCONFIG   use pkg-config tool PKGCONFIG [$pkg_config_default]
-#   --pkg-config-flags=FLAGS pass additional flags to pkgconf []
-#   --ranlib=RANLIB          use ranlib RANLIB [$ranlib_default]
-#   --doxygen=DOXYGEN        use DOXYGEN to generate API doc [$doxygen_default]
-#   --host-cc=HOSTCC         use host C compiler HOSTCC
-#   --host-cflags=HCFLAGS    use HCFLAGS when compiling for host
-#   --host-cppflags=HCPPFLAGS use HCPPFLAGS when compiling for host
-#   --host-ld=HOSTLD         use host linker HOSTLD
-#   --host-ldflags=HLDFLAGS  use HLDFLAGS when linking for host
-#   --host-libs=HLIBS        use libs HLIBS when linking for host
-#   --host-os=OS             compiler host OS [$target_os]
-#   --extra-cflags=ECFLAGS   add ECFLAGS to CFLAGS [$CFLAGS]
-#   --extra-cxxflags=ECFLAGS add ECFLAGS to CXXFLAGS [$CXXFLAGS]
-#   --extra-objcflags=FLAGS  add FLAGS to OBJCFLAGS [$CFLAGS]
-#   --extra-ldflags=ELDFLAGS add ELDFLAGS to LDFLAGS [$LDFLAGS]
-#   --extra-ldexeflags=ELDFLAGS add ELDFLAGS to LDEXEFLAGS [$LDEXEFLAGS]
-#   --extra-ldsoflags=ELDFLAGS add ELDFLAGS to LDSOFLAGS [$LDSOFLAGS]
-#   --extra-libs=ELIBS       add ELIBS [$ELIBS]
-#   --extra-version=STRING   version string suffix []
-#   --optflags=OPTFLAGS      override optimization-related compiler flags
-#   --nvccflags=NVCCFLAGS    override nvcc flags [$nvccflags_default]
-#   --build-suffix=SUFFIX    library name suffix []
-#   --enable-pic             build position-independent code
-#   --enable-thumb           compile for Thumb instruction set
-#   --enable-lto             use link-time optimization
-#   --env="ENV=override"     override the environment variables
-#
-# Advanced options (experts only):
-#   --malloc-prefix=PREFIX   prefix malloc and related names with PREFIX
-#   --custom-allocator=NAME  use a supported custom allocator
-#   --disable-symver         disable symbol versioning
-#   --enable-hardcoded-tables use hardcoded tables instead of runtime generation
-#   --disable-safe-bitstream-reader
-#                            disable buffer boundary checking in bitreaders
-#                            (faster, but may crash)
-#   --sws-max-filter-size=N  the max filter size swscale uses [$sws_max_filter_size_default]
-#
-# Optimization options (experts only):
-#   --disable-asm            disable all assembly optimizations
-#   --disable-altivec        disable AltiVec optimizations
-#   --disable-vsx            disable VSX optimizations
-#   --disable-power8         disable POWER8 optimizations
-#   --disable-amd3dnow       disable 3DNow! optimizations
-#   --disable-amd3dnowext    disable 3DNow! extended optimizations
-#   --disable-mmx            disable MMX optimizations
-#   --disable-mmxext         disable MMXEXT optimizations
-#   --disable-sse            disable SSE optimizations
-#   --disable-sse2           disable SSE2 optimizations
-#   --disable-sse3           disable SSE3 optimizations
-#   --disable-ssse3          disable SSSE3 optimizations
-#   --disable-sse4           disable SSE4 optimizations
-#   --disable-sse42          disable SSE4.2 optimizations
-#   --disable-avx            disable AVX optimizations
-#   --disable-xop            disable XOP optimizations
-#   --disable-fma3           disable FMA3 optimizations
-#   --disable-fma4           disable FMA4 optimizations
-#   --disable-avx2           disable AVX2 optimizations
-#   --disable-aesni          disable AESNI optimizations
-#   --disable-armv5te        disable armv5te optimizations
-#   --disable-armv6          disable armv6 optimizations
-#   --disable-armv6t2        disable armv6t2 optimizations
-#   --disable-vfp            disable VFP optimizations
-#   --disable-neon           disable NEON optimizations
-#   --disable-inline-asm     disable use of inline assembly
-#   --disable-x86asm         disable use of standalone x86 assembly
-#   --disable-mipsdsp        disable MIPS DSP ASE R1 optimizations
-#   --disable-mipsdspr2      disable MIPS DSP ASE R2 optimizations
-#   --disable-msa            disable MSA optimizations
-#   --disable-mipsfpu        disable floating point MIPS optimizations
-#   --disable-mmi            disable Loongson SIMD optimizations
-#   --disable-fast-unaligned consider unaligned accesses slow
-# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-x86asm"

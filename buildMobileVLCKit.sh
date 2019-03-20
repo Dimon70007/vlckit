@@ -16,6 +16,7 @@ CONFIGURATION="Release"
 NONETWORK=no
 SKIPLIBVLCCOMPILATION=no
 SCARY=yes
+TELETEXT=yes
 TVOS=no
 MACOS=no
 IOS=yes
@@ -32,7 +33,7 @@ if [ -z "$MAKE_JOBS" ]; then
     let MAKE_JOBS=$CORE_COUNT+1
 fi
 
-usage() # ./compileAndBuildVLCKit.sh -vdswa x86_64
+usage() # ./buildMobileVLCKit.sh -fbe
 {
 cat << EOF
 usage: $0 [-s] [-v] [-k sdk]
@@ -48,13 +49,14 @@ OPTIONS
    -t       Build for tvOS
    -x       Build for macOS / Mac OS X
    -w       Build a limited stack of non-scary libraries only
+   -e       Build without teletext libraries
    -y       Build universal static libraries
    -b       Enable bitcode
    -a       Build framework for specific arch (all|i386|x86_64|armv7|armv7s|aarch64)
 EOF
 }
 
-while getopts "hvwsfbdxntlk:a:" OPTION
+while getopts "hvwesfbdxntlk:a:" OPTION
 do
      case $OPTION in
          h)
@@ -78,6 +80,8 @@ do
              DEBUG=yes
              ;;
          w)  SCARY="no"
+             ;;
+         e)  TELETEXT="no"
              ;;
          n)
              NONETWORK=yes
@@ -227,17 +231,16 @@ buildxcodeproj()
         architectures=`get_actual_arch $FARCH`
     fi
 
-    if [ "$BITCODE" = "yes" -a \( "$PLATFORM" = "iphoneos" -o "$PLATFORM" = "appletvos" \) ]; then
-      if [ "$CONFIGURATION" = "Debug" ]; then
-        bitcodeflag="BITCODE_GENERATION_MODE=marker"
-      else
-        bitcodeflag="BITCODE_GENERATION_MODE=bitcode"
-      fi
+    if [ "$BITCODE" = "yes" -a "$CONFIGURATION" != "Debug" -a \( "$PLATFORM" = "iphoneos" -o "$PLATFORM" = "appletvos" \) ]; then
+      bitcodeflag="BITCODE_GENERATION_MODE=bitcode"
     fi
 
     local defs="$GCC_PREPROCESSOR_DEFINITIONS"
     if [ "$SCARY" = "no" ]; then
         defs="$defs NOSCARYCODECS"
+    fi
+    if [ "$TELETEXT" = "no" ]; then
+        defs="$defs NOTELETEXT"
     fi
 
     xcodebuild -UseModernBuildSystem=NO \
@@ -390,12 +393,8 @@ buildLibVLC() {
       else
         CFLAGS+=" -${OSVERSIONMINCFLAG}-version-min=${SDK_MIN}"
       fi
-      if [ "$BITCODE" = "yes" ]; then
-        if [ "$CONFIGURATION" = "Debug" ]; then
-          CFLAGS+=" -fembed-bitcode-marker"
-        else
-          CFLAGS+=" -fembed-bitcode"
-        fi
+      if [ "$BITCODE" = "yes" -a "$CONFIGURATION" != "Debug" ]; then
+        CFLAGS+=" -fembed-bitcode"
       fi
     else
       CFLAGS+=" -${OSVERSIONMINCFLAG}-version-min=${SDK_MIN}"
@@ -548,6 +547,10 @@ buildLibVLC() {
     else
         SCARYFLAG="--disable-dca --disable-avcodec --disable-avformat --disable-zvbi --enable-vpx"
     fi
+    TELETEXTFLAG=""
+    if [ "$TELETEXT" = "no" ]; then
+      TELETEXTFLAG=" --disable-freetype"
+    fi
 
     if [ "$TVOS" != "yes" -a \( "$ARCH" = "armv7" -o "$ARCH" = "armv7s" \) ];then
         export ac_cv_arm_neon=yes
@@ -567,7 +570,7 @@ buildLibVLC() {
                 --with-contrib=${VLCROOT}/contrib/${OSSTYLE}-${TARGET}-${ARCH} \
                 ${DEBUGFLAG} \
                 ${CONFIGURE_FLAGS} \
-                ${SCARYFLAG}"
+                ${TELETEXTFLAG} ${SCARYFLAG}"
         info "Configure flags ${confgr_flgs}"
     ${VLCROOT}/configure $confgr_flgs > ${out}
     fi
@@ -588,6 +591,11 @@ buildLibVLC() {
     if [ "$SCARY" = "no" ]; then
     blacklist="${blacklist}
     $NOSCARY_MODULES_BLACKLIST"
+    fi
+
+    if [ "$TELETEXT" = "no" ]; then
+      blacklist="${blacklist}
+      freetype2"
     fi
 
     echo ${blacklist}

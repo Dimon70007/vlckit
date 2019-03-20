@@ -124,7 +124,9 @@ static VLCLibrary * sharedLibrary = nil;
                       @"--avcodec-fast",
 #endif
 #endif
+#ifndef NOTELETEXT
                       @"--text-renderer=freetype",
+#endif
                       @"--avi-index=3",
                       @"--audio-resampler=soxr"];
     }
