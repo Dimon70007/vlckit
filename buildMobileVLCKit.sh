@@ -291,23 +291,29 @@ echo `pwd`
 
 if [ "$NONETWORK" != "yes" ]; then
     if ! [ -e vlc ]; then
-      vlc_copy="$ROOT_DIR/../vlc_copy"
-      if [ -d $vlc_copy ]; then
-        cp -r $vlc_copy vlc
-      else
-        # git clone https://git.videolan.org/git/vlc/vlc-3.0.git vlc && cp -r vlc $vlc_copy
-        git clone https://github.com/Dimon70007/vlc.git vlc && cp -r vlc $vlc_copy
-      fi
+        vlc_cache="$ROOT_DIR/../vlc_cache"
+        cached_vlc="$vlc_cache/vlc"
+
+        if [ -d $cached_vlc ]; then # copy cached vlc dir if already exists
+            cp -r $cached_vlc vlc
+        else # create cached_vlc dir for reducing cloning time on next compilations
+            mkdir -p $vlc_cache
+            # git clone https://git.videolan.org/git/vlc/vlc-3.0.git vlc && cp -r vlc $vlc_cache
+            git clone https://github.com/Dimon70007/vlc.git vlc && cp -r vlc $vlc_cache
+        fi
+
         info "Applying patches to vlc.git"
         cd vlc
         git checkout -B localBranch ${TESTEDHASH}
         git branch --set-upstream-to=origin/master localBranch
         git am ${ROOT_DIR}/Resources/MobileVLCKit/patches/*.patch
+
         if [ $? -ne 0 ]; then
             git am --abort
             info "Applying the patches failed, aborting git-am"
             exit 1
         fi
+
         cd ..
     else
         cd vlc
@@ -332,14 +338,16 @@ fi
 if [ "$SKIPLIBVLCCOMPILATION" != "yes" ]; then
     info "Building tools"
     tools_dir=${ROOT_DIR}/libvlc/vlc/extras/tools
+    cached_tools=${ROOT_DIR}/../vlc_cache/tools
+    if [ -d $cached_tools ]; then # cached_tools have been created already - just copy cached_tools
+      rm -rf $tools_dir && cp -r $cached_tools $tools_dir
+    fi
     spushd $tools_dir
     ./bootstrap
     make
     make .gas
-    extras_copy=${ROOT_DIR}/../vlc_copy/extras
-    old_tools=${extras_copy}/old_tools
-    if [ ! -d $old_tools ]; then # tools have not been copyed yet
-      cp -r $extras_copy/tools $old_tools && cp -r $tools_dir $extras_copy
+    if [ ! -d $cached_tools ]; then # create cached_tools if not exist
+      cp -r $tools_dir $cached_tools
     fi
     spopd #libvlc/vlc/extras/tools
 fi
