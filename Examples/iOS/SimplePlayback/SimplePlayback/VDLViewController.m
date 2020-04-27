@@ -44,7 +44,7 @@
     _mediaplayer.drawable = self.movieView;
 
     /* create a media object and give it to the player */
-    _mediaplayer.media = [VLCMedia mediaWithURL:[NSURL URLWithString:@"http://streams.videolan.org/streams/mp4/Mr_MrsSmith-h264_aac.mp4"]];
+    _mediaplayer.media = [VLCMedia mediaWithURL:[NSURL URLWithString:@"https://s1.vsaas.io/camera.13-1447723768/video1.ts?token=WyJkOWQwIiwyNl0.XS-HEQ.ito41qAkYlATMvQk1lb7KutQM44"]];
 }
 
 - (IBAction)playandPause:(id)sender

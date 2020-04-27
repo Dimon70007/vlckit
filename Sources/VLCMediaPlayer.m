@@ -353,15 +353,15 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 }
 #endif
 
-- (void)setDrawable:(id)aDrawable
+- (void)setDrawable:(id)drawable
 {
     // Make sure that this instance has been associated with the drawing canvas.
-    _drawable = aDrawable;
+    _drawable = drawable;
 
     /* Note that ee need the caller to wait until the setter succeeded.
      * Otherwise, s/he might want to deploy the drawable while it isn’t ready yet. */
     dispatch_sync(_libVLCBackgroundQueue, ^{
-        libvlc_media_player_set_nsobject(_playerInstance, (__bridge void *)(aDrawable));
+        libvlc_media_player_set_nsobject(_playerInstance, (__bridge void *)(drawable));
     });
 }
 
@@ -559,9 +559,9 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     return result;
 }
 
-- (void)setVideoAspectRatio:(char *)value
+- (void)setVideoAspectRatio:(char *)aspectRatio
 {
-    libvlc_video_set_aspect_ratio(_playerInstance, value);
+    libvlc_video_set_aspect_ratio(_playerInstance, aspectRatio);
 }
 
 - (char *)videoAspectRatio
@@ -914,9 +914,9 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 
 #pragma mark -
 #pragma mark Audio tracks
-- (void)setCurrentAudioTrackIndex:(int)value
+- (void)setCurrentAudioTrackIndex:(int)index
 {
-    libvlc_audio_set_track(_playerInstance, value);
+    libvlc_audio_set_track(_playerInstance, index);
 }
 
 - (int)currentAudioTrackIndex

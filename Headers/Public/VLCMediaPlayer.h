@@ -232,6 +232,8 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  */
 @property (NS_NONATOMIC_IOSONLY) char *videoAspectRatio;
 
+- (void)setVideoAspectRatio:(char *)aspectRatio;
+
 /**
  * Set/Get current crop filter geometry.
  *
@@ -582,6 +584,8 @@ extern NSString *const VLCTitleDescriptionIsMenu;
  * Pass -1 to disable.
  */
 @property (readwrite) int currentAudioTrackIndex;
+
+- (void)setCurrentAudioTrackIndex:(int)index;
 
 /**
  * Returns the audio track names, usually a language name or a description

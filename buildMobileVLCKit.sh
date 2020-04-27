@@ -9,7 +9,7 @@ BUILD_SIMULATOR=yes
 BUILD_STATIC_FRAMEWORK=no
 BUILD_DYNAMIC_FRAMEWORK=no
 SDK_VERSION=`xcrun --sdk iphoneos --show-sdk-version`
-SDK_MIN=8.4
+SDK_MIN=9.3
 VERBOSE=no
 DEBUG=no
 CONFIGURATION="Release"
@@ -29,11 +29,11 @@ FARCH="all"
 TESTEDHASH="b8c57759a4" #"9f7eea43b8" # libvlc hash that this version of VLCKit is build on
 
 if [ -z "$MAKE_JOBS" ]; then
-    CORE_COUNT=`sysctl -n machdep.cpu.core_count`
-    let MAKE_JOBS=$CORE_COUNT+1
+    CORE_COUNT=`sysctl -n machdep.cpu.thread_count`
+    let MAKE_JOBS=$CORE_COUNT-1
 fi
 
-usage() # ./buildMobileVLCKit.sh -fbe
+usage() # ./buildMobileVLCKit.sh -fbe   ./buildMobileVLCKit.sh -se
 {
 cat << EOF
 usage: $0 [-s] [-v] [-k sdk]
@@ -546,7 +546,7 @@ buildLibVLC() {
     if [ "$DEBUG" = "yes" ]; then
         DEBUGFLAG="--enable-debug"
     else
-        DEBUGFLAG="--enable-release"
+        # DEBUGFLAG="--enable-release"
         export CFLAGS="${CFLAGS} -DNDEBUG"
     fi
 

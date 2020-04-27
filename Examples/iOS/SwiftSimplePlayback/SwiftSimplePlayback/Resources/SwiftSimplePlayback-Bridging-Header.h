@@ -12,6 +12,6 @@
 #ifndef SwiftSimplePlayback_Bridging_Header_h
 #define SwiftSimplePlayback_Bridging_Header_h
 
-#import "MobileVLCKit/MobileVLCKit.h"
+//#import "MobileVLCKit/MobileVLCKit.h"
 
 #endif /* SwiftSimplePlayback_Bridging_Header_h */
