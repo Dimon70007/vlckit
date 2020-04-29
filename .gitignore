@@ -14,3 +14,4 @@ DerivedData
 MobileVLCKit/ImportedSources
 /libvlc
 Pods
+DynamicMobileVLCKit.framework

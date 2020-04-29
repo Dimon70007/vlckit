@@ -33,7 +33,7 @@ if [ -z "$MAKE_JOBS" ]; then
     let MAKE_JOBS=$CORE_COUNT-1
 fi
 
-usage() # ./buildMobileVLCKit.sh -fbe   ./buildMobileVLCKit.sh -se
+usage() # ./buildMobileVLCKit.sh -fbe   ./buildMobileVLCKit.sh -se      ./buildMobileVLCKit.sh -fed
 {
 cat << EOF
 usage: $0 [-s] [-v] [-k sdk]

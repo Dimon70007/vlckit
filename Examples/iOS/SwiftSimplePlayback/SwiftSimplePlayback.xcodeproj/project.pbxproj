@@ -3,11 +3,10 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		444B72A57474CBBECD843770 /* libPods-SwiftSimplePlayback.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FFF1CD8D2AF1952B37E9CCD /* libPods-SwiftSimplePlayback.a */; };
 		8DD4AA512167AA3100F3EF5A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DD4AA502167AA3100F3EF5A /* AppDelegate.swift */; };
 		8DD4AA562167AA3100F3EF5A /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8DD4AA542167AA3100F3EF5A /* Home.storyboard */; };
 		8DD4AA582167AA3300F3EF5A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8DD4AA572167AA3300F3EF5A /* Assets.xcassets */; };
@@ -30,7 +29,6 @@
 		8DD4AA682167AE0C00F3EF5A /* PlaybackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackViewController.swift; sourceTree = "<group>"; };
 		8DD4AA6A2167AF9A00F3EF5A /* SwiftSimplePlayback-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SwiftSimplePlayback-Bridging-Header.h"; sourceTree = "<group>"; };
 		8DD4AA6B2167B46C00F3EF5A /* Playback.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Playback.storyboard; sourceTree = "<group>"; };
-		9FFF1CD8D2AF1952B37E9CCD /* libPods-SwiftSimplePlayback.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SwiftSimplePlayback.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,7 +36,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				444B72A57474CBBECD843770 /* libPods-SwiftSimplePlayback.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,14 +48,12 @@
 				6032F25614DD453CD9EA8A07 /* Pods-SwiftSimplePlayback.debug.xcconfig */,
 				1A6B5331F772C3014D8B4FA7 /* Pods-SwiftSimplePlayback.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
 		5739E475059BFD9D18412FDB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				9FFF1CD8D2AF1952B37E9CCD /* libPods-SwiftSimplePlayback.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
