@@ -1,0 +1,98 @@
+From 2a3517c3ad03b79aa96841499169571ff2d47350 Mon Sep 17 00:00:00 2001
+From: Dmitriy Grachev <dmitriy.grachev@erlyvideo.org>
+Date: Fri, 31 Jul 2020 21:07:24 +0300
+Subject: [PATCH] added bootstrap --ffmpeg- flag for custom ffmpeg options
+
+---
+ contrib/bootstrap            |  9 ++++++++-
+ contrib/src/ffmpeg/rules.mak | 19 ++++++++++++-------
+ 2 files changed, 20 insertions(+), 8 deletions(-)
+
+diff --git a/contrib/bootstrap b/contrib/bootstrap
+index b7cab040a5..7f8ece50e6 100755
+--- a/contrib/bootstrap
++++ b/contrib/bootstrap
+@@ -35,6 +35,8 @@ usage()
+ 	echo "  --enable-ad-clauses configure to build packages with advertising clauses"
+ 	echo "                   (USE AT YOUR OWN LEGAL RISKS)"
+ 	echo "  --disable-optim  disable optimization in libraries"
++	echo "  --enable-pdb     generate debug information in PDB format"
++	echo " --ffmpeg-<any_custom_ffmpeg_option> used for customize ffmpeg, for options see http://git.videolan.org/git/ffmpeg.git"
+ }
+ 
+ BUILD=
+@@ -49,6 +51,8 @@ GPL="1"
+ GNUV3="1"
+ AD_CLAUSES=
+ WITH_OPTIMIZATION="1"
++ENABLE_PDB=
++FFMPEG_CUSTOM_CONFIG=
+ 
+ if test ! -f "../../contrib/src/main.mak"
+ then
+@@ -102,6 +106,9 @@ do
+ 		--enable-*)
+ 			PKGS_ENABLE="${PKGS_ENABLE} ${1#--enable-}"
+ 			;;
++		--ffmpeg-*)
++			FFMPEG_CUSTOM_CONFIG="${FFMPEG_CUSTOM_CONFIG} ${1#--ffmpeg-}"
++			;;
+ 		*)
+ 			echo "Unrecognized options $1"
+ 			usage
+@@ -276,7 +283,7 @@ check_tizen_sdk()
+ 	[ ${TIZEN_ABI} = "armv7l" ] && add_make_enabled "HAVE_NEON"
+ 	[ ${TIZEN_ABI} = "armv7l" ] && add_make_enabled "HAVE_ARMV7A"
+ }
+-
++test -z "$FFMPEG_CUSTOM_CONFIG" || add_make "FFMPEG_CUSTOM_CONFIG := $FFMPEG_CUSTOM_CONFIG"
+ test -z "$PREFIX" || add_make "PREFIX := $PREFIX"
+ test -z "$BUILD_DISCS" || add_make_enabled "BUILD_DISCS"
+ test -z "$BUILD_ENCODERS" || add_make_enabled "BUILD_ENCODERS"
+diff --git a/contrib/src/ffmpeg/rules.mak b/contrib/src/ffmpeg/rules.mak
+index 0226af35eb..d62f99ae6b 100644
+--- a/contrib/src/ffmpeg/rules.mak
++++ b/contrib/src/ffmpeg/rules.mak
+@@ -57,12 +57,6 @@ endif
+ 
+ DEPS_ffmpeg = zlib gsm
+ 
+-ifndef USE_LIBAV
+-FFMPEGCONF += \
+-	--enable-libopenjpeg
+-DEPS_ffmpeg += openjpeg
+-endif
+-
+ # Optional dependencies
+ ifndef BUILD_NETWORK
+ FFMPEGCONF += --disable-network
+@@ -74,6 +68,16 @@ else
+ FFMPEGCONF += --disable-encoders --disable-muxers
+ endif
+ 
++ifdef FFMPEG_CUSTOM_CONFIG
++FFMPEGCONF += $(FFMPEG_CUSTOM_CONFIG)
++endif
++
++ifndef USE_LIBAV
++ifneq (,$(findstring --enable-libopenjpeg,$(FFMPEGCONF)))
++DEPS_ffmpeg += openjpeg
++endif
++endif
++
+ # Small size
+ ifdef WITH_OPTIMIZATION
+ ifdef ENABLE_SMALL
+@@ -260,7 +264,8 @@ endif
+ 
+ .ffmpeg: ffmpeg
+ 	cd $< && $(HOSTVARS) ./configure \
+-		--extra-ldflags="$(LDFLAGS)" $(FFMPEGCONF) \
++		--extra-ldflags="$(LDFLAGS)" \
++		$(FFMPEGCONF) \
+ 		--prefix="$(PREFIX)" --enable-static --disable-shared
+ 	cd $< && $(MAKE) install-libs install-headers
+ 	touch $@
+-- 
+2.26.2
+
