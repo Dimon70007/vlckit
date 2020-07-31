@@ -8,10 +8,10 @@ VLCKit: build/Debug/VLCKit.framework
 	mv $@-tmp $@ && touch $@
 
 build/Debug/VLCKit.framework:
-	xcodebuild -project VLCKit.xcodeproj -target "Build Everything"
+	xcodebuild -UseModernBuildSystem=NO -project VLCKit.xcodeproj -target "Build Everything"
 
 clean:
-	xcodebuild -project VLCKit.xcodeproj clean
+	xcodebuild -UseModernBuildSystem=NO -project VLCKit.xcodeproj clean
 	rm -fr VLCKit VLCKit.zip
 
 .PHONY: clean
