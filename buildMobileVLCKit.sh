@@ -26,14 +26,15 @@ OSVERSIONMINLDFLAG=ios
 ROOT_DIR=empty
 FARCH="all"
 
+# 8d26ecb5517b0593ba4b3c4cd5dc39e527064a10 - comit hash of my local changes for vlckit 3.3.13 version
 TESTEDHASH="7df954cb" # libvlc hash that this version of VLCKit is build on
 
 if [ -z "$MAKE_JOBS" ]; then
-    CORE_COUNT=`sysctl -n machdep.cpu.core_count`
-    let MAKE_JOBS=$CORE_COUNT+1
+    CORE_COUNT=`sysctl -n machdep.cpu.thread_count`
+    let MAKE_JOBS=$CORE_COUNT-1
 fi
 
-usage()
+usage() # ./buildMobileVLCKit.sh -fbe   ./buildMobileVLCKit.sh -se      ./buildMobileVLCKit.sh -fed
 {
 cat << EOF
 usage: $0 [-s] [-v] [-k sdk]
@@ -308,7 +309,7 @@ if [ "$NONETWORK" != "yes" ]; then
         cd vlc
         git checkout -B localBranch ${TESTEDHASH}
         git branch --set-upstream-to=origin/master localBranch
-        git am ${ROOT_DIR}/Resources/MobileVLCKit/patches/*.patch
+        git am -3 ${ROOT_DIR}/Resources/MobileVLCKit/patches/*.patch
 
         if [ $? -ne 0 ]; then
             git am --abort
