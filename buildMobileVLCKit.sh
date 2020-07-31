@@ -16,6 +16,7 @@ CONFIGURATION="Release"
 NONETWORK=no
 SKIPLIBVLCCOMPILATION=no
 SCARY=yes
+TELETEXT=yes
 TVOS=no
 MACOS=no
 IOS=yes
@@ -48,13 +49,14 @@ OPTIONS
    -t       Build for tvOS
    -x       Build for macOS / Mac OS X
    -w       Build a limited stack of non-scary libraries only
+   -e       Build without teletext libraries
    -y       Build universal static libraries
    -b       Enable bitcode
    -a       Build framework for specific arch (all|i386|x86_64|armv7|armv7s|aarch64)
 EOF
 }
 
-while getopts "hvwsfbdxntlk:a:" OPTION
+while getopts "hvwesfbdxntlk:a:" OPTION
 do
      case $OPTION in
          h)
@@ -78,6 +80,8 @@ do
              DEBUG=yes
              ;;
          w)  SCARY="no"
+             ;;
+         e)  TELETEXT="no"
              ;;
          n)
              NONETWORK=yes
@@ -223,6 +227,7 @@ buildxcodeproj()
     info "Building $1 ($target, ${CONFIGURATION}, $PLATFORM)"
 
     local architectures=""
+    local bitcodeflag=""
     if [ "$FARCH" = "all" ];then
         if [ "$TVOS" = "yes" ]; then
             if [ "$PLATFORM" = "appletvsimulator" ]; then
@@ -233,9 +238,9 @@ buildxcodeproj()
         fi
         if [ "$IOS" = "yes" ]; then
             if [ "$PLATFORM" = "iphonesimulator" ]; then
-                architectures="i386 x86_64 arm64"
+                architectures="x86_64"
             else
-                architectures="armv7 armv7s arm64"
+                architectures="armv7 arm64"
             fi
         fi
         if [ "$MACOS" = "yes" ]; then
@@ -245,17 +250,20 @@ buildxcodeproj()
         architectures=`get_actual_arch $FARCH`
     fi
 
-    local bitcodeflag=""
-    if [ "$BITCODE" = "yes" ]; then
-        bitcodeflag="BITCODE_GENERATION_MODE=bitcode"
+    if [ "$BITCODE" = "yes" -a "$CONFIGURATION" != "Debug" -a \( "$PLATFORM" = "iphoneos" -o "$PLATFORM" = "appletvos" \) ]; then
+      bitcodeflag="BITCODE_GENERATION_MODE=bitcode"
     fi
 
     local defs="$GCC_PREPROCESSOR_DEFINITIONS"
     if [ "$SCARY" = "no" ]; then
         defs="$defs NOSCARYCODECS"
     fi
+    if [ "$TELETEXT" = "no" ]; then
+        defs="$defs NOTELETEXT"
+    fi
 
     xcodebuild archive \
+               -UseModernBuildSystem=NO \
                -project "$1.xcodeproj" \
                -sdk $PLATFORM$SDK \
                -configuration ${CONFIGURATION} \
@@ -272,6 +280,20 @@ buildxcodeproj()
 # Get root dir
 spushd .
 ROOT_DIR=`pwd`
+export BOOTSTRAP_FLAGS=
+export CONFIGURE_FLAGS=
+export MODULES_BLACKLIST=
+export NOSCARY_MODULES_BLACKLIST=
+source $ROOT_DIR/config_flags.sh
+if [ "$DEBUG" = "yes" ]; then
+    OPTIM="-O0 -g -Og"
+    CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-optimizations" # compiler optimizations (default enabled)
+else
+    OPTIM="-O3 -g"
+    CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-optimizations" # compiler optimizations (default enabled)
+    # BOOTSTRAP_FLAGS="${BOOTSTRAP_FLAGS} --enable-small"
+    
+fi
 spopd
 
 # get python installation
@@ -294,17 +316,29 @@ echo `pwd`
 
 if [ "$NONETWORK" != "yes" ]; then
     if ! [ -e vlc ]; then
-        git clone https://git.videolan.org/git/vlc/vlc-3.0.git vlc
+        vlc_cache="$ROOT_DIR/../vlc_cache"
+        cached_vlc="$vlc_cache/vlc"
+
+        if [ -d $cached_vlc ]; then # copy cached vlc dir if already exists
+            cp -r $cached_vlc vlc
+        else # create cached_vlc dir for reducing cloning time on next compilations
+            mkdir -p $vlc_cache
+            # git clone https://git.videolan.org/git/vlc/vlc-3.0.git vlc && cp -r vlc $vlc_cache
+            git clone https://github.com/Dimon70007/vlc.git vlc && cp -r vlc $vlc_cache
+        fi
+
         info "Applying patches to vlc.git"
         cd vlc
         git checkout -B localBranch ${TESTEDHASH}
         git branch --set-upstream-to=origin/master localBranch
         git am ${ROOT_DIR}/Resources/MobileVLCKit/patches/*.patch
+
         if [ $? -ne 0 ]; then
             git am --abort
             info "Applying the patches failed, aborting git-am"
             exit 1
         fi
+
         cd ..
     else
         cd vlc
@@ -328,10 +362,18 @@ fi
 
 if [ "$SKIPLIBVLCCOMPILATION" != "yes" ]; then
     info "Building tools"
-    spushd ${ROOT_DIR}/libvlc/vlc/extras/tools
+    tools_dir=${ROOT_DIR}/libvlc/vlc/extras/tools
+    cached_tools=${ROOT_DIR}/../vlc_cache/tools
+    if [ -d $cached_tools ]; then # cached_tools have been created already - just copy cached_tools
+      rm -rf $tools_dir && cp -r $cached_tools $tools_dir
+    fi
+    spushd $tools_dir
     ./bootstrap
     make
     make .buildgas
+    if [ ! -d $cached_tools ]; then # create cached_tools if not exist
+      cp -r $tools_dir $cached_tools
+    fi
     spopd #libvlc/vlc/extras/tools
 fi
 
@@ -387,21 +429,20 @@ buildLibVLC() {
     EXTRA_LDFLAGS="-arch ${ACTUAL_ARCH}"
 
     if [ "$PLATFORM" = "OS" ]; then
-    if [ "$ARCH" != "aarch64" ]; then
-    EXTRA_CFLAGS+=" -mcpu=cortex-a8 -${OSVERSIONMINCFLAG}-version-min=${SDK_MIN}"
+        if [ "$ARCH" != "aarch64" ]; then
+            EXTRA_CFLAGS+=" -mcpu=cortex-a8 -${OSVERSIONMINCFLAG}-version-min=${SDK_MIN}"
+        else
+            EXTRA_CFLAGS+=" -${OSVERSIONMINCFLAG}-version-min=${SDK_MIN}"
+        fi
+        if [ "$BITCODE" = "yes" -a "$CONFIGURATION" != "Debug" ]; then
+            EXTRA_CFLAGS+=" -fembed-bitcode"
+        fi
     else
-    EXTRA_CFLAGS+=" -${OSVERSIONMINCFLAG}-version-min=${SDK_MIN}"
-    fi
-    else
-    if [ "$MACOS" = "yes" ]; then
-    EXTRA_CFLAGS+=" -${OSVERSIONMINCFLAG}-version-min=${SDK_MIN}"
-    else
-    EXTRA_CFLAGS+=" -${OSVERSIONMINCFLAG}-simulator-version-min=${SDK_MIN}"
-    fi
-    fi
-
-    if [ "$BITCODE" = "yes" ]; then
-    EXTRA_CFLAGS+=" -fembed-bitcode"
+        if [ "$MACOS" = "yes" ]; then
+            EXTRA_CFLAGS+=" -${OSVERSIONMINCFLAG}-version-min=${SDK_MIN}"
+        else
+            EXTRA_CFLAGS+=" -${OSVERSIONMINCFLAG}-simulator-version-min=${SDK_MIN}"
+        fi
     fi
 
     if [ "$PLATFORM" = "Simulator" ]; then
@@ -446,10 +487,14 @@ buildLibVLC() {
         CUSTOMOSOPTIONS="--disable-fontconfig --disable-bghudappkit --disable-twolame --disable-microdns --disable-SDL --disable-SDL_image --disable-cddb --disable-bluray"
     fi
     if [ "$IOS" = "yes" ]; then
-        CUSTOMOSOPTIONS=""
+        CUSTOMOSOPTIONS="--disable-libarchive"
     fi
 
     BUILD_TRIPLET=$(vlcGetBuildTriplet)
+
+    if [ ! "$DEBUG" = "yes" ]; then
+      CUSTOMOSOPTIONS="$CUSTOMOSOPTIONS --enable-small" # optimize libraries for size with slight speed decrease [DANGEROUS]"
+    fi
 
     if [ "$MACOS" = "yes" ]; then
         # The following symbols do not exist on the minimal macOS version (10.7), so they are disabled
@@ -499,56 +544,11 @@ buildLibVLC() {
     export ac_cv_func_timespec_get=no
 
     export USE_FFMPEG=1
-    ../bootstrap --build=${BUILD_TRIPLET} --host=${HOST_TRIPLET} --prefix=${VLCROOT}/contrib/${OSSTYLE}${PLATFORM_IDENTIFIER}-${HOST_TRIPLET}-${ARCH} --disable-gpl \
-        --enable-ad-clauses \
-        --disable-gnuv3 \
-        --disable-disc \
-        --disable-sdl \
-        --disable-SDL_image \
-        --disable-iconv \
-        --enable-zvbi \
-        --disable-kate \
-        --disable-caca \
-        --disable-gettext \
-        --disable-mpcdec \
-        --enable-upnp \
-        --disable-gme \
-        --disable-srt \
-        --disable-tremor \
-        --enable-vorbis \
-        --disable-sidplay2 \
-        --disable-samplerate \
-        --disable-goom \
-        --disable-vncserver \
-        --disable-orc \
-        --disable-schroedinger \
-        --disable-libmpeg2 \
-        --disable-chromaprint \
-        --disable-mad \
-        --enable-fribidi \
-        --enable-libxml2 \
-        --enable-freetype2 \
-        --enable-ass \
-        --disable-fontconfig \
-        --disable-gpg-error \
-        --disable-vncclient \
-        --disable-gnutls \
-        --disable-lua \
-        --disable-luac \
-        --disable-aribb24 \
-        --disable-aribb25 \
-        --enable-vpx \
-        --enable-libdsm \
-        --enable-smb2 \
-        --enable-libplacebo \
-        --disable-sparkle \
-        --disable-growl \
-        --disable-breakpad \
-        --disable-ncurses \
-        --disable-asdcplib \
-        --enable-soxr \
-        ${CUSTOMOSOPTIONS} \
-        --enable-taglib > ${out}
+    bootstr_flgs="--build=${BUILD_TRIPLET} --host=${HOST_TRIPLET} --prefix=${VLCROOT}/contrib/${OSSTYLE}${PLATFORM_IDENTIFIER}-${HOST_TRIPLET}-${ARCH} \
+        ${BOOTSTRAP_FLAGS} \
+        ${CUSTOMOSOPTIONS}"
+    info "Bootstrap flags $bootstr_flgs"
+    ../bootstrap $bootstr_flgs > ${out}
 
     rm -f config.mak
     echo "EXTRA_CFLAGS += ${EXTRA_CFLAGS}" >> config.mak
@@ -575,13 +575,18 @@ buildLibVLC() {
     if [ "$DEBUG" = "yes" ]; then
         DEBUGFLAG="--enable-debug"
     else
-        export CFLAGS="${EXTRA_CFLAGS} -DNDEBUG"
+        DEBUGFLAG="--enable-release"
+        export CFLAGS="${CFLAGS} -DNDEBUG"
     fi
 
     if [ "$SCARY" = "yes" ]; then
         SCARYFLAG="--enable-dvbpsi --enable-avcodec"
     else
-        SCARYFLAG="--disable-dca --disable-dvbpsi --disable-avcodec --disable-avformat --disable-zvbi --enable-vpx"
+        SCARYFLAG="--disable-dca --disable-avcodec --disable-avformat --disable-zvbi --enable-vpx"
+    fi
+    TELETEXTFLAG=""
+    if [ "$TELETEXT" = "no" ]; then
+      TELETEXTFLAG=" --disable-freetype"
     fi
 
     if [ "$TVOS" != "yes" -a \( "$ARCH" = "armv7" -o "$ARCH" = "armv7s" \) ];then
@@ -597,61 +602,15 @@ buildLibVLC() {
     if [ "${VLCROOT}/configure" -nt config.log -o \
          "${THIS_SCRIPT_PATH}" -nt config.log ]; then
          info "Configuring vlc"
-
-    ${VLCROOT}/configure \
-        --prefix="${PREFIX}" \
-        --host="${HOST_TRIPLET}" \
-        --with-contrib="${VLCROOT}/contrib/${OSSTYLE}${PLATFORM_IDENTIFIER}-${HOST_TRIPLET}-${ARCH}" \
-        --enable-static \
-        ${DEBUGFLAG} \
-        ${SCARYFLAG} \
-        --disable-macosx \
-        --disable-macosx-qtkit \
-        --disable-macosx-avfoundation \
-        --disable-shared \
-        --enable-opus \
-        --disable-faad \
-        --disable-lua \
-        --disable-a52 \
-        --enable-fribidi \
-        --disable-qt --disable-skins2 \
-        --disable-vcd \
-        --disable-vlc \
-        --disable-vlm \
-        --disable-nls \
-        --disable-sse \
-        --disable-notify \
-        --enable-live555 \
-        --enable-realrtsp \
-        --enable-swscale \
-        --disable-projectm \
-        --enable-libass \
-        --enable-libxml2 \
-        --disable-goom \
-        --disable-dvdread \
-        --disable-dvdnav \
-        --disable-bluray \
-        --disable-linsys \
-        --disable-libva \
-        --disable-gme \
-        --disable-tremor \
-        --enable-vorbis \
-        --disable-fluidsynth \
-        --disable-jack \
-        --disable-pulse \
-        --disable-mtp \
-        --enable-ogg \
-        --enable-speex \
-        --enable-theora \
-        --enable-flac \
-        --disable-screen \
-        --enable-freetype \
-        --enable-taglib \
-        --enable-smb2 \
-        --disable-mmx \
-        --disable-sparkle \
-        --disable-addonmanagermodules \
-        --disable-mad > ${out}
+        confgr_flgs="--prefix=${PREFIX} \
+                --host=${HOST_TRIPLET} \
+                --with-contrib=${VLCROOT}/contrib/${OSSTYLE}${PLATFORM_IDENTIFIER}-${HOST_TRIPLET}-${ARCH} \
+                ${DEBUGFLAG} \
+                ${CONFIGURE_FLAGS} \
+                ${TELETEXTFLAG} ${SCARYFLAG}"
+                #                 ${CONFIGURE_FLAGS} ${TELETEXTFLAG} - added by me
+        info "Configure flags ${confgr_flgs}"
+    ${VLCROOT}/configure $confgr_flgs > ${out}
     fi
 
     info "Building libvlc"
@@ -665,96 +624,16 @@ buildLibVLC() {
     cp -R "${VLCROOT}/contrib/${OSSTYLE}${PLATFORM_IDENTIFIER}-${HOST_TRIPLET}-${ARCH}" "${PREFIX}/contribs"
 
     info "Removing unneeded modules"
-    blacklist="
-    stats
-    access_bd
-    shm
-    access_imem
-    oldrc
-    real
-    hotkeys
-    gestures
-    dynamicoverlay
-    rss
-    ball
-    marq
-    magnify
-    audiobargraph_
-    clone
-    mosaic
-    osdmenu
-    puzzle
-    mediadirs
-    t140
-    ripple
-    motion
-    sharpen
-    grain
-    posterize
-    mirror
-    wall
-    scene
-    blendbench
-    psychedelic
-    alphamask
-    netsync
-    audioscrobbler
-    motiondetect
-    motionblur
-    export
-    smf
-    podcast
-    bluescreen
-    erase
-    stream_filter_record
-    speex_resampler
-    remoteosd
-    magnify
-    gradient
-    logger
-    visual
-    fb
-    aout_file
-    invert
-    sepia
-    wave
-    hqdn3d
-    headphone_channel_mixer
-    gaussianblur
-    gradfun
-    extract
-    colorthres
-    antiflicker
-    anaglyph
-    remap
-    oldmovie
-    vhs
-    fingerprinter
-    output_udp
-    output_livehttp
-    "
+    blacklist=$MODULES_BLACKLIST
 
     if [ "$SCARY" = "no" ]; then
     blacklist="${blacklist}
-    dts
-    dvbsub
-    svcd
-    hevc
-    packetizer_mlp
-    a52
-    vc1
-    uleaddvaudio
-    librar
-    libvoc
-    avio
-    chorus_flanger
-    smooth
-    cvdsub
-    libmod
-    libdash
-    libmpgv
-    dolby_surround
-    mpegaudio"
+    $NOSCARY_MODULES_BLACKLIST"
+    fi
+
+    if [ "$TELETEXT" = "no" ]; then
+      blacklist="${blacklist}
+      freetype2"
     fi
 
     echo ${blacklist}
@@ -769,10 +648,10 @@ buildLibVLC() {
 
 buildMobileKit() {
     PLATFORM="$1"
-
     cleantheenvironment
 
     if [ "$SKIPLIBVLCCOMPILATION" != "yes" ]; then
+      info "buildMobileKit PLATFORM: $PLATFORM"
         if [ "$TVOS" = "yes" ]; then
             # this variable is read by libvlc's contrib build script
             # to create the required build environment
@@ -818,12 +697,12 @@ buildMobileKit() {
             fi
             if [ "$IOS" = "yes" ]; then
                 if [ "$PLATFORM" = "iphonesimulator" ]; then
-                    buildLibVLC "i386" "Simulator"
+                    # buildLibVLC "i386" "Simulator"
                     buildLibVLC "x86_64" "Simulator"
                     buildLibVLC "aarch64" "Simulator"
                 else
                     buildLibVLC "armv7" "OS"
-                    buildLibVLC "armv7s" "OS"
+                    # buildLibVLC "armv7s" "OS"
                     buildLibVLC "aarch64" "OS"
                 fi
             fi
@@ -848,6 +727,8 @@ buildMobileKit() {
                 buildLibVLC $FARCH $buildPlatform
             fi
         fi
+    else
+      info "buildMobileKit skipped PLATFORM: $PLATFORM, SKIPLIBVLCCOMPILATION: $SKIPLIBVLCCOMPILATION"
     fi
 }
 
@@ -1145,7 +1026,7 @@ if [ "$IOS" = "yes" ]; then
         dsymfolder=$PROJECT_DIR/build/MobileVLCKit-${platform}.xcarchive/dSYMs/MobileVLCKit.framework.dSYM
         frameworks="$frameworks -framework MobileVLCKit-${platform}.xcarchive/Products/Library/Frameworks/MobileVLCKit.framework -debug-symbols $dsymfolder"
     fi
-    if [ "$FARCH" = "all" ] || (is_simulator_arch $arch);then
+    if [ "$FARCH" = "all" ] || (is_simulator_arch $FARCH);then
         platform="iphonesimulator"
         buildxcodeproj MobileVLCKit "MobileVLCKit" ${platform}
         dsymfolder=$PROJECT_DIR/build/MobileVLCKit-${platform}.xcarchive/dSYMs/MobileVLCKit.framework.dSYM

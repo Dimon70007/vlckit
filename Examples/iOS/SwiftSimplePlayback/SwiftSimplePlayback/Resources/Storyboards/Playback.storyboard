@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="HGc-G6-ZL5">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="HGc-G6-ZL5">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,12 +16,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aLL-ew-e1a" userLabel="Movie View">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aLL-ew-e1a" userLabel="Movie View">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NbE-wc-F8a" userLabel="Mute">
+                                <rect key="frame" x="168.5" y="537" width="38" height="30"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Mute"/>
+                                <connections>
+                                    <action selector="handleMute:" destination="HGc-G6-ZL5" eventType="touchUpInside" id="X2O-vY-7mz"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hvv-Rg-xyx">
-                                <rect key="frame" x="165" y="501" width="45" height="30"/>
+                                <rect key="frame" x="165" y="587" width="45" height="30"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Pause"/>
                                 <state key="selected" title="Play"/>
@@ -36,8 +44,10 @@
                             <constraint firstItem="hvv-Rg-xyx" firstAttribute="centerX" secondItem="haG-g0-pgP" secondAttribute="centerX" id="25b-2F-SL7"/>
                             <constraint firstItem="aLL-ew-e1a" firstAttribute="top" secondItem="haG-g0-pgP" secondAttribute="top" id="395-cS-Hum"/>
                             <constraint firstItem="aLL-ew-e1a" firstAttribute="leading" secondItem="haG-g0-pgP" secondAttribute="leading" id="JIO-nJ-wAX"/>
+                            <constraint firstItem="NbE-wc-F8a" firstAttribute="centerX" secondItem="3O4-cU-Yvn" secondAttribute="centerX" id="OCN-1t-xOF"/>
+                            <constraint firstItem="hvv-Rg-xyx" firstAttribute="top" secondItem="NbE-wc-F8a" secondAttribute="bottom" constant="20" id="T21-20-Loy"/>
                             <constraint firstItem="aLL-ew-e1a" firstAttribute="trailing" secondItem="haG-g0-pgP" secondAttribute="trailing" id="o58-o3-MHz"/>
-                            <constraint firstItem="haG-g0-pgP" firstAttribute="bottom" secondItem="hvv-Rg-xyx" secondAttribute="bottom" constant="136" id="qbU-wZ-bCY"/>
+                            <constraint firstItem="haG-g0-pgP" firstAttribute="bottom" secondItem="hvv-Rg-xyx" secondAttribute="bottom" constant="50" id="p11-J4-Fit"/>
                             <constraint firstItem="aLL-ew-e1a" firstAttribute="bottom" secondItem="haG-g0-pgP" secondAttribute="bottom" id="rNF-jR-goY"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="haG-g0-pgP"/>
@@ -48,6 +58,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vYb-uN-ZbY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="140" y="133.5832083958021"/>
         </scene>
     </scenes>
 </document>

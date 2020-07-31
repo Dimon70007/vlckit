@@ -1,16 +1,16 @@
 PODS:
-  - MobileVLCKit (3.1.4)
+  - DynamicMobileVLCKit (3.3.0)
 
 DEPENDENCIES:
-  - MobileVLCKit
+  - DynamicMobileVLCKit (from `../../../`)
 
-SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
-    - MobileVLCKit
+EXTERNAL SOURCES:
+  DynamicMobileVLCKit:
+    :path: "../../../"
 
 SPEC CHECKSUMS:
-  MobileVLCKit: 34e17d0148c7a1af90c68c10b17b0707dc980d78
+  DynamicMobileVLCKit: c53a1dc364edf87a5a3a5c1f503501fe4bd58dc5
 
-PODFILE CHECKSUM: a6bd5de9b895fd72205388913ae1f9b748b2d1d5
+PODFILE CHECKSUM: bc600bf6e3d4930bd46540a32e834c912971019b
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.9.1
