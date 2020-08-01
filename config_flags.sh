@@ -66,7 +66,7 @@ done
 #     --disable-aribb25 \
 #     --enable-vpx \ !!!
 #     --enable-libdsm \
-#     --enable-smb2 \ new added
+#     --enable-smb2 \ !!! new added
 #     --enable-libplacebo \
 #     --disable-sparkle \
 #     --disable-growl \
@@ -79,7 +79,7 @@ BOOTSTRAP_FLAGS="${BOOTSTRAP_FLAGS} \
 --disable-gpl \
 --enable-ad-clauses \
 --disable-gnuv3 \
---enable-smb2 \
+--disable-smb2 \
 --disable-sout \
 --disable-disc \
 --disable-a52 \
@@ -108,7 +108,6 @@ BOOTSTRAP_FLAGS="${BOOTSTRAP_FLAGS} \
 --disable-fluid \
 --disable-fluidlite \
 --disable-fontconfig \
---disable-freetype2 \
 --disable-fribidi \
 --disable-gettext \
 --disable-gme \
@@ -170,14 +169,14 @@ BOOTSTRAP_FLAGS="${BOOTSTRAP_FLAGS} \
 --disable-vncserver \
 --disable-vorbis \
 --disable-vpx \
+--disable-zvbi \
 --disable-x264 \
 --disable-x265 \
---disable-zvbi \
 --disable-luac"
-
+# --disable-freetype2 \
 
 CONFIGURE_FLAGS="
---enable-static=yes \
+--enable-static \
 --disable-shared \
 --disable-sse \
 --disable-mmx" # sse and mmx optimisations disabled because of inconsistency between x86_64 and arm* architectures
@@ -525,9 +524,9 @@ CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-schroedinger" # dirac decoder and 
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-jpeg" # JPEG support (default enabled)
 #   # --enable-bpg           BPG support (default disabled)
 #   # --enable-x262           H262 encoding support with static libx262 (default disabled)
-CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-x265" # HEVC/H.265 encoder [default=auto]
-CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-x264" #H264 encoding support with libx264 (default enabled)
-CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-x26410b" #  H264 10-bit encoding support with libx264 (default enabled)
+# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-x265" # HEVC/H.265 encoder [default=auto]
+# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-x264" #H264 encoding support with libx264 (default enabled)
+# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-x26410b" #  H264 10-bit encoding support with libx264 (default enabled)
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-mfx" # Intel QuickSync MPEG4-Part10/MPEG2 (aka H.264/H.262)  encoder [default=auto]
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-fluidsynth" # MIDI synthetiser with libfluidsynth [default=auto]
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-fluidlite" # MIDI synthetiser with libfluidsynth [default=auto]
@@ -548,7 +547,7 @@ CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-tiger" # Tiger rendering library f
 # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-vdpau" #VDPAU hardware support (default auto)
 #   # --enable-wayland        Incomplete Wayland support (default disabled)
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-sdl-image" #SDL image support (default enabled)
-CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-freetype" # freetype support   (default auto) for drawtext filter
+# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-freetype" # freetype support   (default auto) for drawtext filter
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-fribidi" # fribidi support    (default auto) for drawtext filter
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-harfbuzz" # harfbuzz support   (default auto)
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-fontconfig" # fontconfig support (default auto) for drawtext filter
@@ -610,7 +609,7 @@ CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-libxml2" #libxml2 support [default=
 # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-libgcrypt" #gcrypt support (default enabled) needed ssh2 and for rtmp(t)e support
 # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-gnutls" #GNU TLS TLS/SSL support (default enabled) needed for https support if openssl is not used
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-taglib" #do not use TagLib (default enabled)
-CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-smb2" # new added 
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-smb2" # new added 
 
 
 #   # --enable-secret         use libsecret for keystore [default=auto]

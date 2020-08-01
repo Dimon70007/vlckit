@@ -81,7 +81,6 @@
 				BC2FFBA324D38ECE00D2189C /* CoreImage.framework in Frameworks */,
 				BC2FFBA224D38E1800D2189C /* MediaPlayer.framework in Frameworks */,
 				BC2FFBA124D38E0700D2189C /* UIKit.framework in Frameworks */,
-				7D8745B8183BABE800FD09E0 /* AudioToolbox.framework in Frameworks */,
 				7DEBFE81183BF0AA00BC53D5 /* AVFoundation.framework in Frameworks */,
 				7D8745BD183BAC0D00FD09E0 /* CFNetwork.framework in Frameworks */,
 				BC2FFBA024D38D7800D2189C /* CoreFoundation.framework in Frameworks */,
@@ -93,6 +92,7 @@
 				7D8745BB183BABEE00FD09E0 /* OpenGLES.framework in Frameworks */,
 				7D8745C7183BACAE00FD09E0 /* QuartzCore.framework in Frameworks */,
 				D4771D93189848E70087441B /* Security.framework in Frameworks */,
+				7D8745B8183BABE800FD09E0 /* AudioToolbox.framework in Frameworks */,
 				7D7B6C4B1B70C41700E879CF /* VideoToolbox.framework in Frameworks */,
 				BC2FFB9E24D38B7500D2189C /* MobileVLCKit.framework in Frameworks */,
 			);
