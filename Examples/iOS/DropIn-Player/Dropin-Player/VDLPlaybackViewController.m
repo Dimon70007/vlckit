@@ -91,7 +91,7 @@
 {
     if (_mediaplayer.isPlaying)
         [_mediaplayer pause];
-
+    else
     [_mediaplayer play];
 }
 
