@@ -33,8 +33,9 @@
 - (IBAction)startPlayback:(id)sender
 {
     VDLAppDelegate *appDelegate = (VDLAppDelegate *)[UIApplication sharedApplication].delegate;
+    [appDelegate playStreamFromURL:[NSURL URLWithString:@"https://www.elecard.com/storage/video/bbb_1080p_c.ts"]];
 //    [appDelegate playStreamFromURL:[NSURL URLWithString:@"http://download.tsi.telecom-paristech.fr/gpac/dataset/dash/uhd/mux_sources/hevcds_720p30_2M.mp4"]];
-    [appDelegate playStreamFromURL:[NSURL URLWithString:@"https://dash.akamaized.net/dash264/TestCasesUHD/2b/11/MultiRate.mpd"]];
+//    [appDelegate playStreamFromURL:[NSURL URLWithString:@"https://dash.akamaized.net/dash264/TestCasesUHD/2b/11/MultiRate.mpd"]];
 //    [appDelegate playStreamFromURL:[NSURL URLWithString:@"https://dash.akamaized.net/dash264/TestCasesIOP33/adapatationSetSwitching/5/manifest.mpd"]];
     
 }

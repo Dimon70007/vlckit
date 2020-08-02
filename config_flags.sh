@@ -54,8 +54,8 @@ done
 #     --disable-mad \
 #     --enable-fribidi \ !!!
 #     --enable-libxml2 \
-#     --enable-freetype2 \ !!!
-#     --enable-ass \ !!!
+#     --enable-freetype2 \
+#     --enable-ass \
 #     --disable-fontconfig \
 #     --disable-gpg-error \
 #     --disable-vncclient \
@@ -75,6 +75,7 @@ done
 #     --disable-asdcplib \
 #     --enable-soxr \
 #     --enable-taglib !!!
+
 BOOTSTRAP_FLAGS="${BOOTSTRAP_FLAGS} \
 --disable-gpl \
 --enable-ad-clauses \
@@ -87,7 +88,7 @@ BOOTSTRAP_FLAGS="${BOOTSTRAP_FLAGS} \
 --disable-aribb24 \
 --disable-aribb25 \
 --disable-asdcplib \
---disable-ass \
+--enable-ass \
 --disable-bluray \
 --disable-bpg \
 --disable-breakpad \
@@ -108,6 +109,7 @@ BOOTSTRAP_FLAGS="${BOOTSTRAP_FLAGS} \
 --disable-fluid \
 --disable-fluidlite \
 --disable-fontconfig \
+--enable-freetype2 \
 --disable-fribidi \
 --disable-gettext \
 --disable-gme \
@@ -122,7 +124,7 @@ BOOTSTRAP_FLAGS="${BOOTSTRAP_FLAGS} \
 --disable-kate \
 --disable-lame \
 --disable-libarchive \
---enable-libdsm \
+--disable-libdsm \
 --disable-libmpeg2 \
 --enable-libplacebo \
 --enable-libxml2 \
@@ -173,7 +175,6 @@ BOOTSTRAP_FLAGS="${BOOTSTRAP_FLAGS} \
 --disable-x264 \
 --disable-x265 \
 --disable-luac"
-# --disable-freetype2 \
 
 CONFIGURE_FLAGS="
 --enable-static \
@@ -359,7 +360,7 @@ mpegaudio"
 # --enable-realrtsp \ !!!
 # --enable-swscale \
 # --disable-projectm \
-# --enable-libass \ !!!
+# --enable-libass \
 # --enable-libxml2 \
 # --disable-goom \
 # --disable-dvdread \
@@ -379,7 +380,7 @@ mpegaudio"
 # --enable-theora \ !!!
 # --enable-flac \ !!!
 # --disable-screen \
-# --enable-freetype \ !!!
+# --enable-freetype \
 # --enable-taglib \ !!!
 # --enable-smb2 \ new added
 # --disable-mmx \
@@ -471,7 +472,7 @@ CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-macosx-qtkit" # Mac OS X qtsound (
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-macosx-avfoundation" # Mac OS X avcapture (video) module (default enabled on Mac OS X)
 # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-asdcp" # build with asdcp support enabled [default=auto]
 # # Mux/Demux plugins:
-CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-dvbpsi" # build with dvbpsi support enabled [default=auto] MPEG-TS support
+# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-dvbpsi" # build with dvbpsi support enabled [default=auto] MPEG-TS support
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-gme" #use Game Music Emu (default auto)
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-sid" # C64 sid demux support (default auto)
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-ogg" # Ogg demux support [default=auto]
@@ -524,15 +525,15 @@ CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-schroedinger" # dirac decoder and 
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-jpeg" # JPEG support (default enabled)
 #   # --enable-bpg           BPG support (default disabled)
 #   # --enable-x262           H262 encoding support with static libx262 (default disabled)
-# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-x265" # HEVC/H.265 encoder [default=auto]
-# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-x264" #H264 encoding support with libx264 (default enabled)
-# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-x26410b" #  H264 10-bit encoding support with libx264 (default enabled)
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-x265" # HEVC/H.265 encoder [default=auto]
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-x264" #H264 encoding support with libx264 (default enabled)
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-x26410b" #  H264 10-bit encoding support with libx264 (default enabled)
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-mfx" # Intel QuickSync MPEG4-Part10/MPEG2 (aka H.264/H.262)  encoder [default=auto]
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-fluidsynth" # MIDI synthetiser with libfluidsynth [default=auto]
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-fluidlite" # MIDI synthetiser with libfluidsynth [default=auto]
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-zvbi" # VBI (inc. Teletext) decoding support with libzvbi (default enabled)
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-telx" # Teletext decoding module (conflicting with zvbi) (default enabled if zvbi is absent)
-CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-libass" # Subtitle support using libass (default enabled)
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-libass" # Subtitle support using libass (default enabled)
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-aribsub" #ARIB Subtitles support (default enabled)
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-aribb25" #ARIB STD-B25 [default=auto]
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-kate" # kate codec [default=auto]
@@ -547,7 +548,7 @@ CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-tiger" # Tiger rendering library f
 # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-vdpau" #VDPAU hardware support (default auto)
 #   # --enable-wayland        Incomplete Wayland support (default disabled)
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-sdl-image" #SDL image support (default enabled)
-# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-freetype" # freetype support   (default auto) for drawtext filter
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-freetype" # freetype support   (default auto) for drawtext filter
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-fribidi" # fribidi support    (default auto) for drawtext filter
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-harfbuzz" # harfbuzz support   (default auto)
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-fontconfig" # fontconfig support (default auto) for drawtext filter
