@@ -325,8 +325,8 @@ if [ "$NONETWORK" != "yes" ]; then
             cp -r $cached_vlc vlc
         else # create cached_vlc dir for reducing cloning time on next compilations
             mkdir -p $vlc_cache
-            # git clone https://git.videolan.org/git/vlc/vlc-3.0.git vlc && cp -r vlc $vlc_cache
-            git clone https://github.com/Dimon70007/vlc.git vlc && cp -r vlc $vlc_cache
+            git clone https://git.videolan.org/git/vlc/vlc-3.0.git vlc && cp -r vlc $vlc_cache
+            # git clone https://github.com/Dimon70007/vlc.git vlc && cp -r vlc $vlc_cache
         fi
 
         info "Applying patches to vlc.git"
