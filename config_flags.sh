@@ -174,6 +174,7 @@ BOOTSTRAP_FLAGS="${BOOTSTRAP_FLAGS} \
 --disable-zvbi \
 --disable-x264 \
 --disable-x265 \
+--disable-gcrypt \
 --disable-luac"
 
 CONFIGURE_FLAGS="
@@ -249,6 +250,7 @@ vhs
 fingerprinter
 output_udp
 output_livehttp
+harfbuzz
 a52"
 
 # stats
@@ -607,7 +609,7 @@ CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-upnp" # Intel UPNP SDK [default=au
 #
 # # Misc options:
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-libxml2" #libxml2 support [default=auto]
-# CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-libgcrypt" #gcrypt support (default enabled) needed ssh2 and for rtmp(t)e support
+CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-libgcrypt" #gcrypt support (default enabled) needed ssh2 and for rtmp(t)e support
 # CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-gnutls" #GNU TLS TLS/SSL support (default enabled) needed for https support if openssl is not used
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-taglib" #do not use TagLib (default enabled)
 CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-smb2" # new added 
