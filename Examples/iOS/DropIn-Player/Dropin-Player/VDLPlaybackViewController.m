@@ -108,11 +108,13 @@
 
     /* setup the media player instance, give it a delegate and something to draw into */
     _mediaplayer = [[VLCMediaPlayer alloc] init];
+    
+    /* enable debug logging from libvlc here */
+    _mediaplayer.libraryInstance.debugLogging = YES;
+    _mediaplayer.libraryInstance.debugLoggingLevel = 3;
     _mediaplayer.delegate = self;
     _mediaplayer.drawable = self.movieView;
 
-    /* enable debug logging from libvlc here */
-    _mediaplayer.libraryInstance.debugLogging = YES;
 
     /* listen for notifications from the player */
     [_mediaplayer addObserver:self forKeyPath:@"time" options:0 context:nil];

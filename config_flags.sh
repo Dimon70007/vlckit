@@ -118,6 +118,7 @@ BOOTSTRAP_FLAGS="${BOOTSTRAP_FLAGS} \
 --disable-gpg-error \
 --disable-growl \
 --disable-harfbuzz \
+--disable-libharfbuzz \
 --disable-iconv \
 --disable-jack \
 --disable-jpeg \
@@ -251,6 +252,7 @@ fingerprinter
 output_udp
 output_livehttp
 harfbuzz
+libharfbuzz
 a52"
 
 # stats
