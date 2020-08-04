@@ -59,10 +59,10 @@ COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-avdevice"
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-avcodec"
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-avformat"
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-avutil"
-COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-swresample"
+COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-swresample"
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-swscale"
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-postproc"
-COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-avfilter"
+COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-avfilter"
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-avresample"
 # COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-pthreads"
 # COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-w32threads"
@@ -77,8 +77,8 @@ COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-avresample"
 # COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-fft"
 
 # hardware acceleration features:
-# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-amf" # disable AMF video encoding code [autodetect]
-# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-cuda" # disable dynamically linked Nvidia CUDA code [autodetect]
+COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-amf" # disable AMF video encoding code [autodetect]
+COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-cuda" # disable dynamically linked Nvidia CUDA code [autodetect]
 #   # --enable-cuda-sdk        enable CUDA features that require the CUDA SDK [no]
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS  --disable-d3d11va" # disable Microsoft Direct3D 11 video acceleration code [autodetect]
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS  --disable-dxva2"   # disable Microsoft DirectX 9 video acceleration code [autodetect]
@@ -86,17 +86,17 @@ COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS  --disable-dxva2"   # disable Microsof
 #   # --enable-libmfx          enable Intel MediaSDK (AKA Quick Sync Video) code via libmfx [no]
 #   # --enable-libnpp          enable Nvidia Performance Primitives-based code [no]
 #   # --enable-mmal            enable Broadcom Multi-Media Abstraction Layer (Raspberry Pi) via MMAL [no]
-# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS  --disable-cuvid"   # disable Nvidia CUVID support [autodetect]
-# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS  --disable-nvdec"   # disable Nvidia video decoding acceleration (via hwaccel) [autodetect]
-# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS  --disable-nvenc"   # disable Nvidia video encoding code [autodetect]
+COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS  --disable-cuvid"   # disable Nvidia CUVID support [autodetect]
+COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS  --disable-nvdec"   # disable Nvidia video decoding acceleration (via hwaccel) [autodetect]
+COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS  --disable-nvenc"   # disable Nvidia video encoding code [autodetect]
 #   # --enable-omx             enable OpenMAX IL code [no]
 #   # --enable-omx-rpi         enable OpenMAX IL code for Raspberry Pi [no]
 #   # --enable-rkmpp           enable Rockchip Media Process Platform code [no]
 #   # --disable-v4l2-m2m       disable V4L2 mem2mem code [autodetect]
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS  --disable-vaapi"   # disable Video Acceleration API (mainly Unix/Intel) code [autodetect]
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS  --disable-vdpau"   # disable Nvidia Video Decode and Presentation API for Unix code [autodetect]
-  # --disable-audiotoolbox   disable Apple AudioToolbox code [autodetect]
-  # --disable-videotoolbox   disable VideoToolbox code [autodetect]
+# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-audiotoolbox" #   disable Apple AudioToolbox code [autodetect]
+# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-videotoolbox" #   disable VideoToolbox code [autodetect]
 
 # Individual component options:
 #   --disable-everything     disable all components listed below
@@ -147,6 +147,7 @@ COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-decoder=mp3" # crashes withou
 # COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-decoder=h263p"
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-decoder=h264"
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-decoder=hevc"
+COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-decoder=mjpeg"
 
 # ./configure --list-muxers
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-muxers"
@@ -177,6 +178,7 @@ COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-parser=aac_latm"
 # COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-parser=h263"
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-parser=h264"
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-parser=hevc"
+COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-parser=mjpeg"
 
 # ./configure --list-bsf
 # COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-bsfs"
@@ -212,7 +214,7 @@ COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-protocol=unix"
 
 # External library support:
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-devices"
-COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-filters"
+# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-filters"
 export COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-iconv"
 
 #   Using any of the following switches will allow FFmpeg to link to the

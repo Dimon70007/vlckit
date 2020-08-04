@@ -28,7 +28,7 @@ FARCH="all"
 
 TESTEDHASH="b4c7317a" # libvlc hash that this version of VLCKit is build on
 # 8d26ecb5517b0593ba4b3c4cd5dc39e527064a10 - comit hash of my local changes for vlckit 3.3.13 version
-# TESTEDHASH="7df954cb" # libvlc hash that this version of VLCKit is build on
+TESTEDHASH="52483f3c" #"7df954cb" # libvlc hash that this version of VLCKit is build on
 
 if [ -z "$MAKE_JOBS" ]; then
     CORE_COUNT=`sysctl -n machdep.cpu.thread_count`
@@ -288,8 +288,8 @@ export MODULES_BLACKLIST=
 export NOSCARY_MODULES_BLACKLIST=
 source $ROOT_DIR/config_flags.sh
 if [ "$DEBUG" = "yes" ]; then
-    OPTIM="-O0 -g -Og"
-    CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --disable-optimizations" # compiler optimizations (default enabled)
+    OPTIM="-O0 -g"
+    CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-debug --disable-optimizations" # compiler optimizations (default enabled)
 else
     OPTIM="-O3 -g"
     CONFIGURE_FLAGS="${CONFIGURE_FLAGS} --enable-optimizations" # compiler optimizations (default enabled)

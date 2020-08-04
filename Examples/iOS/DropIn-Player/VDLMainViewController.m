@@ -36,7 +36,9 @@
 //    [appDelegate playStreamFromURL:[NSURL URLWithString:@"https://youtu.be/xneIc5uUS4c"]];
 //    [appDelegate playStreamFromURL:[NSURL URLWithString:@"http://download.tsi.telecom-paristech.fr/gpac/dataset/dash/uhd/mux_sources/hevcds_720p30_2M.mp4"]];
 //    [appDelegate playStreamFromURL:[NSURL URLWithString:@"https://dash.akamaized.net/dash264/TestCasesUHD/2b/11/MultiRate.mpd"]];
-    [appDelegate playStreamFromURL:[NSURL URLWithString:@"https://dash.akamaized.net/dash264/TestCasesIOP33/adapatationSetSwitching/5/manifest.mpd"]];
+//    [appDelegate playStreamFromURL:[NSURL URLWithString:@"https://dash.akamaized.net/dash264/TestCasesIOP33/adapatationSetSwitching/5/manifest.mpd"]];
+    [appDelegate playStreamFromURL:[NSURL URLWithString:@"https://s3.amazonaws.com/senkorasic.com/test-media/video/sintel/Sintel-1080p-HEVC.mp4"]];
+    
     
 }
 

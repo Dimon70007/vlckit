@@ -16,7 +16,8 @@ class PlaybackViewController: UIViewController {
 //    let mediaURL = "https://dash.akamaized.net/akamai/test/caption_test/ElephantsDream/elephants_dream_480p_heaac5_1.mpd"
 //    let mediaURL = "https://www.libde265.org/hevc-bitstreams/tos-1720x720-cfg01.mkv"
 //    let mediaURL =     "https://dash.akamaized.net/dash264/TestCasesMCA/fraunhofer/HE-AACv2_Multichannel/1/6chID/6chId_480p_single_adapt_heaac5_1_sidx.mpd"
-    let mediaURL = "https://media.axprod.net/TestVectors/v6.1-MultiDRM/Manifest_1080p.mpd"
+//    let mediaURL = "https://media.axprod.net/TestVectors/v6.1-MultiDRM/Manifest_1080p.mpd"
+    let mediaURL = "https://dash.akamaized.net/dash264/TestCasesUHD/2b/11/MultiRate.mpd"
     @IBOutlet weak var movieView: UIView!
 
     var mediaPlayer = VLCMediaPlayer()
@@ -37,7 +38,7 @@ class PlaybackViewController: UIViewController {
         mediaPlayer.drawable = movieView
         let bounds = movieView.bounds
         let aspectRatio = calcAspectRatio(bounds: bounds)
-        mediaPlayer.videoAspectRatio = aspectRatio
+//        mediaPlayer.videoAspectRatio = aspectRatio
         print("aspectRatio \(String(describing: mediaPlayer.videoAspectRatio))", aspectRatio)
         mediaPlayer.media = VLCMedia(url: URL(string: mediaURL)!)
     }
