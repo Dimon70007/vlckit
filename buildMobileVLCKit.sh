@@ -28,14 +28,13 @@ FARCH="all"
 
 TESTEDHASH="b4c7317a" # libvlc hash that this version of VLCKit is build on
 # 8d26ecb5517b0593ba4b3c4cd5dc39e527064a10 - comit hash of my local changes for vlckit 3.3.13 version
-TESTEDHASH="52483f3c" #"7df954cb" # libvlc hash that this version of VLCKit is build on
 
 if [ -z "$MAKE_JOBS" ]; then
     CORE_COUNT=`sysctl -n machdep.cpu.thread_count`
     let MAKE_JOBS=$CORE_COUNT-1
 fi
 
-usage() # ./buildMobileVLCKit.sh -fbe   ./buildMobileVLCKit.sh -se      ./buildMobileVLCKit.sh -fed
+usage() # ./buildMobileVLCKit.sh -fe   ./buildMobileVLCKit.sh -se      ./buildMobileVLCKit.sh -fe
 {
 cat << EOF
 usage: $0 [-s] [-v] [-k sdk]
@@ -811,7 +810,7 @@ collect_symbols_and_libraries() {
             \( "$FARCH" = "all" -o "$FARCH" = "armv7" -o "$FARCH" = "armv7s" \) ]; then
             # collect ARMv7/s specific neon modules
             if [ "$FARCH" = "all" ];then
-                NEONARCHS="armv7 armv7s"
+                NEONARCHS="armv7"
                 spushd armv7/lib/vlc/plugins
             else
                 NEONARCHS=$FARCH
@@ -1024,6 +1023,7 @@ if [ "$IOS" = "yes" ]; then
     platform=""
     if [ "$FARCH" = "all" ] || (! is_simulator_arch $FARCH);then
         platform="iphoneos"
+    #
         buildxcodeproj MobileVLCKit "MobileVLCKit" ${platform}
         dsymfolder=$PROJECT_DIR/build/MobileVLCKit-${platform}.xcarchive/dSYMs/MobileVLCKit.framework.dSYM
         frameworks="$frameworks -framework MobileVLCKit-${platform}.xcarchive/Products/Library/Frameworks/MobileVLCKit.framework -debug-symbols $dsymfolder"

@@ -60,6 +60,38 @@ NSString *const VLCMetaInformationShowName       = @"showName";
 NSString *const VLCMetaInformationActors         = @"actors";
 NSString *const VLCMetaInformationAlbumArtist    = @"AlbumArtist";
 NSString *const VLCMetaInformationDiscNumber     = @"discNumber";
+//General
+//ID                                       : 2 (0x2)
+//Format                                   : MPEG-TS
+//File size                                : 915 MiB
+//Duration                                 : 8mn 31s
+//Start time                               : UTC 2009-06-09 14:15:57
+//End time                                 : UTC 2009-06-09 14:24:12
+//Overall bit rate                         : 15.0 Mbps
+//
+//Video #1
+//ID                                       : 256 (0x100)
+//Menu ID                                  : 1 (0x1)
+//Format                                   : AVC
+//Format/Info                              : Advanced Video Codec
+//Format profile                           : Main@L3.0
+//Format settings, CABAC                   : Yes
+//Format settings, ReFrames                : 4 frames
+//Codec ID                                 : 27
+//Duration                                 : 8mn 31s
+//Width                                    : 720 pixels
+//Height                                   : 576 pixels
+//Display aspect ratio                     : 4:3
+//Frame rate                               : 25.000 fps
+//Standard                                 : PAL
+//Color space                              : YUV
+//Chroma subsampling                       : 4:2:0
+//Bit depth                                : 8 bits
+//Scan type                                : MBAFF
+//Scan order                               : Top Field First
+//Color primaries                          : BT.470-6 System B, BT.470-6 System G, BT.601-6 625, BT.1358 625, BT.1700 625 PAL, BT.1700 625 SECAM
+//Transfer characteristics                 : BT.470-6 System B, BT.470-6 System G
+//Matrix coefficients                      : BT.470-6 System B, BT.470-6 System
 
 /* Notification Messages */
 NSString *const VLCMediaMetaChanged              = @"VLCMediaMetaChanged";

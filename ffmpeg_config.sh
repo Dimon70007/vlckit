@@ -78,23 +78,23 @@ COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-avresample"
 
 # hardware acceleration features:
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-amf" # disable AMF video encoding code [autodetect]
-COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-cuda" # disable dynamically linked Nvidia CUDA code [autodetect]
+# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-cuda" # disable dynamically linked Nvidia CUDA code [autodetect]
 #   # --enable-cuda-sdk        enable CUDA features that require the CUDA SDK [no]
-COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS  --disable-d3d11va" # disable Microsoft Direct3D 11 video acceleration code [autodetect]
-COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS  --disable-dxva2"   # disable Microsoft DirectX 9 video acceleration code [autodetect]
+# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS  --disable-d3d11va" # disable Microsoft Direct3D 11 video acceleration code [autodetect]
+# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS  --disable-dxva2"   # disable Microsoft DirectX 9 video acceleration code [autodetect]
 #   # --enable-libdrm          enable DRM code (Linux) [no]
 #   # --enable-libmfx          enable Intel MediaSDK (AKA Quick Sync Video) code via libmfx [no]
 #   # --enable-libnpp          enable Nvidia Performance Primitives-based code [no]
 #   # --enable-mmal            enable Broadcom Multi-Media Abstraction Layer (Raspberry Pi) via MMAL [no]
-COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS  --disable-cuvid"   # disable Nvidia CUVID support [autodetect]
-COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS  --disable-nvdec"   # disable Nvidia video decoding acceleration (via hwaccel) [autodetect]
-COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS  --disable-nvenc"   # disable Nvidia video encoding code [autodetect]
+# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS  --disable-cuvid"   # disable Nvidia CUVID support [autodetect]
+# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS  --disable-nvdec"   # disable Nvidia video decoding acceleration (via hwaccel) [autodetect]
+# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS  --disable-nvenc"   # disable Nvidia video encoding code [autodetect]
 #   # --enable-omx             enable OpenMAX IL code [no]
 #   # --enable-omx-rpi         enable OpenMAX IL code for Raspberry Pi [no]
 #   # --enable-rkmpp           enable Rockchip Media Process Platform code [no]
 #   # --disable-v4l2-m2m       disable V4L2 mem2mem code [autodetect]
-COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS  --disable-vaapi"   # disable Video Acceleration API (mainly Unix/Intel) code [autodetect]
-COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS  --disable-vdpau"   # disable Nvidia Video Decode and Presentation API for Unix code [autodetect]
+# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS  --disable-vaapi"   # disable Video Acceleration API (mainly Unix/Intel) code [autodetect]
+# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS  --disable-vdpau"   # disable Nvidia Video Decode and Presentation API for Unix code [autodetect]
 # COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-audiotoolbox" #   disable Apple AudioToolbox code [autodetect]
 # COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-videotoolbox" #   disable VideoToolbox code [autodetect]
 
@@ -154,7 +154,7 @@ COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-muxers"
 
 # ./configure --list-demuxers
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-demuxers"
-# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-demuxer=ac3"
+COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-demuxer=ac3"
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-demuxer=aac"
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-demuxer=concat"
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-demuxer=data"
@@ -172,10 +172,10 @@ COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-demuxer=webm_dash_manifest"
 
 # ./configure --list-parsers
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-parsers"
-# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-parser=ac3"
+COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-parser=ac3"
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-parser=aac"
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-parser=aac_latm"
-# COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-parser=h263"
+COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-parser=h263"
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-parser=h264"
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-parser=hevc"
 COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-parser=mjpeg"
@@ -305,7 +305,7 @@ export COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-iconv"
 #   --enable-libxcb-shape    enable X11 grabbing shape rendering [autodetect]
 #   --enable-libxvid         enable Xvid encoding via xvidcore,
 #                            native MPEG-4/Xvid encoder exists [no]
-#   --enable-libxml2         enable XML parsing using the C library libxml2 [no]
+# export COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-libxml2" # enable XML parsing using the C library libxml2 [no]
 #   --enable-libzimg         enable z.lib, needed for zscale filter [no]
 #   --enable-libzmq          enable message passing via libzmq [no]
 #   --enable-libzvbi         enable teletext support via libzvbi [no]
