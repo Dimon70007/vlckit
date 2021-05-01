@@ -1,5 +1,5 @@
 PODS:
-  - DynamicMobileVLCKit (3.3.0)
+  - DynamicMobileVLCKit (3.3.16)
 
 DEPENDENCIES:
   - DynamicMobileVLCKit (from `../../../`)
@@ -9,8 +9,8 @@ EXTERNAL SOURCES:
     :path: "../../../"
 
 SPEC CHECKSUMS:
-  DynamicMobileVLCKit: c53a1dc364edf87a5a3a5c1f503501fe4bd58dc5
+  DynamicMobileVLCKit: d237de9130a359fdb70de54a5788654857f46d03
 
 PODFILE CHECKSUM: bc600bf6e3d4930bd46540a32e834c912971019b
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.10.1

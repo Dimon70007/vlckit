@@ -132,8 +132,8 @@ else
 fi
 
 echo "▸▸ Deleting arch specific Frameworks"
-rm -rf "${BUILD_DIR}/${CONFIGURATION}-iphoneos"
-rm -rf "${BUILD_DIR}/${CONFIGURATION}-iphonesimulator"
+# rm -rf "${BUILD_DIR}/${CONFIGURATION}-iphoneos"
+# rm -rf "${BUILD_DIR}/${CONFIGURATION}-iphonesimulator"
 rm -rf "${BUILD_DIR}/${TARGET}.build"
 rm -rf $DERIVED_DATA_DIR
 
